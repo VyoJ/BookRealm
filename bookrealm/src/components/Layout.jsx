@@ -6,11 +6,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Navbar />
-      <div
-        className={`h-[calc(100vh-176px)] bg-no-repeat`}
-      >
-        {children}
-      </div>
+      {children}
       <Footer />
     </>
   );

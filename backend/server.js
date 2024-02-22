@@ -1,7 +1,10 @@
 const express = require("express");
-// const mongoose = require("mongoose");
-// require("dotenv").config();
+const mongoose = require("mongoose");
+require("dotenv").config();
 const cors = require("cors");
+const userRoutes = require("./routes/userRoutes");
+const bookRoutes = require("./routes/bookRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 const PORT = 2000;
@@ -24,4 +27,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use("/user", userRoutes);
+app.use("/book", bookRoutes);
+app.use("/admin", adminRoutes);
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
