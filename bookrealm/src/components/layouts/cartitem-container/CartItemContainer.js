@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
-import './CartItemContainer.style.css';
-import { cartContext } from '../../../app';
-import CartItemCard from '../../cards/cart-item-cart/CartItemCard';
-
+import React, { useContext } from "react";
+import "./CartItemContainer.style.css";
+import { cartContext } from "../../../app";
+import CartItemCard from "../../cards/cart-item-cart/CartItemCard";
 
 export const CartItemContainer = () => {
-  const { cartItem, totalAmount } = useContext(cartContext)
-  console.log('cartitem container')
-  console.log(cartItem)
+  const { cartItem, totalAmount } = useContext(cartContext);
+  console.log("cartitem container");
+  console.log(cartItem);
   return (
     <section>
       <div className="card-item-container">
@@ -21,5 +20,5 @@ export const CartItemContainer = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
