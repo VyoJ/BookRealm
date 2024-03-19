@@ -12,8 +12,8 @@ const ProductListing = () => {
           might like
         </h2>
         <div className="listings-wrapper">
-          {book.map((book) => (
-            <ProductListingCard key={book.id} bookData={book} />
+          {book.map((book, index) => (
+            <ProductListingCard key={index} bookData={book} />
           ))}
         </div>
       </div>
