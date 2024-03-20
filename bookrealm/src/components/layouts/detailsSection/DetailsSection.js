@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./detailssection.style.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { book } from "../../../util/BookData";
-import { userContext, cartContext } from "../../../app";
+import { book } from "../../../util/bookData";
+import { userContext, cartContext } from "../../../App";
 
 export const DetailsSection = () => {
   const { id } = useParams(); //console.log(id)

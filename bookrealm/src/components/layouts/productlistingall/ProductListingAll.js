@@ -1,7 +1,7 @@
 import React from "react";
 import "./productlistingall.style.css";
 import ProductListingCard from "../../cards/product-listing-card/product-listing-card/ProductListingCard";
-import { book } from "../../../util/BookData";
+import { book } from "../../../util/bookData";
 
 export const ProductListingAll = () => {
   return (
