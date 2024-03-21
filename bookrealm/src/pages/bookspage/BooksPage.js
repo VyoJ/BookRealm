@@ -5,8 +5,6 @@ import SearchInputForm from "../../components/form/searchInputForm/Searchinputfo
 import { ProductListingAll } from "../../components/layouts/productlistingall/ProductListingAll";
 import Footer from "../../components/layouts/footer/footer";
 
-// import Footer from '../../components/layouts/footer/Footer';
-
 const BooksPage = () => {
   return (
     <section>

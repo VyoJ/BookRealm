@@ -10,7 +10,6 @@ import { Login } from "./pages/loginnpage/login.js";
 import CartPage from "./pages/cartpage/Cartpage.js";
 import ScrollToTop from "./components/util/ScrollToTop.js";
 import SearchPage from "./pages/searchpage/SearchPage.js";
-import axios from "axios";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
@@ -18,7 +17,7 @@ export const cartContext = createContext({});
 const App = () => {
   const auth = getAuth(fire);
 
-  const [authenticateUser, setauthenticateUser] = useState(null);
+  const [authenticateUser, setauthenticateUser] = useState("");
   const [cartItem, setcartItem] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -27,30 +26,10 @@ const App = () => {
       console.log(user, "from app.js");
       console.log("userId", user.uid);
       if (user) {
-        axios
-          .get(`http://localhost:2000/user/id/${user.uid}`)
-          .then((response) => {
-            console.log("Get", response);
-            localStorage.setItem("userId", user.uid);
-            setauthenticateUser(user);
-          })
-          .catch((error) => {
-            axios
-              .post("http://localhost:2000/user/create", {
-                userid: user.uid,
-                email: user.email,
-              })
-              .then((response) => {
-                console.log("Post", response);
-                localStorage.setItem("userId", user.uid);
-                setauthenticateUser(user);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          });
+        localStorage.setItem("userId", user.uid);
+        setauthenticateUser(user);
       } else {
-        setauthenticateUser(null);
+        setauthenticateUser("");
       }
     });
   }, [onAuthStateChanged]);

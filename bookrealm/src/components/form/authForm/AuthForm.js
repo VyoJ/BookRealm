@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import axios from "axios";
 
 export const AuthForm = ({ btnName }) => {
   const [email, setEmail] = useState("");
@@ -27,15 +28,24 @@ export const AuthForm = ({ btnName }) => {
         })
         .catch((err) => console.log(err));
     } else {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredentials) => {
+      createUserWithEmailAndPassword(auth, email, password).then(
+        (userCredentials) => {
           // console.log(userCredentials)
           userCredentials.user.displayName = username;
+          axios
+            .post("http://localhost:2000/user/create", {
+              userid: userCredentials.user.uid,
+              email: email,
+            })
+            .then((response) => {
+              console.log("Post", response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
           navigate("/");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        }
+      );
     }
   };
   return (
