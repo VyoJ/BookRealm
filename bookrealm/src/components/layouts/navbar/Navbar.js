@@ -68,6 +68,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { getAuth, signOut } from "firebase/auth";
 import fire from "../../../firebase/Firebase";
+// import {getSelectedFile} from '../../../pages/userportal.js'
 
 export default function Navbar({ darkTheme, darkTextTheme }) {
   const user = useContext(userContext);
@@ -80,10 +81,16 @@ export default function Navbar({ darkTheme, darkTextTheme }) {
   };
 
 
+
+    const imageData = localStorage.getItem('selectedFile');
+  
+
+
   const handelLogout = () => {
     signOut(auth)
       .then(() => {
         localStorage.removeItem("userId");
+        localStorage.removeItem('selectedFile')
         console.log("logout successful");
         navigate("/");
         console.log(user,'after logout')
@@ -144,21 +151,6 @@ export default function Navbar({ darkTheme, darkTextTheme }) {
               <div className=" ml-5" style={{color:"white"}}>
                 <p>hi , User </p>
               </div>
-              <Link
-                to="/user"
-                className={`${darkTextTheme
-                  ? "nav-links-dark cart-link"
-                  : "nav-links cart-link"
-                  } `}
-              >
-                <div className="relative ml-3">
-                  <button type="button" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                    <span className="absolute -inset-1.5"></span>
-                    <span className="sr-only">Open user menu</span>
-                    <img className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                  </button>
-                </div>
-              </Link>
             </>
           ) : (
             <>
@@ -176,6 +168,29 @@ export default function Navbar({ darkTheme, darkTextTheme }) {
               </Link>
             </>
           )}
+                 <Link
+                to={`${user ? '/user':'/login'}`}
+                onClick={() => {
+                  if(!user) {
+                    alert('Please Login to view your profile')
+                  }
+                }}
+                className={`${darkTextTheme
+                  ? "nav-links-dark cart-link"
+                  : "nav-links cart-link"
+                  } `}
+              >
+                <div className="relative ml-3">
+                  <button type="button" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                    <span className="absolute -inset-1.5"></span>
+                    <span className="sr-only">Open user menu</span>
+                    {user? 
+                    <img className="h-8 w-8 rounded-full" src={imageData ? imageData:"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} alt="" /> :
+                    <img className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                    }
+                  </button>
+                </div>
+              </Link>
 
         </nav>
       </div>
