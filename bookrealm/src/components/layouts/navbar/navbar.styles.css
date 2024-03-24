@@ -85,7 +85,7 @@ background: radial-gradient(circle, rgba(239,198,77,0.7399334733893557) 8%, rgba
       display: block;
       /* width: 100vh; */
     }
-  
+
     .nav-link-container {
       flex-direction: column;
       position: absolute;
@@ -99,10 +99,11 @@ background: radial-gradient(circle, rgba(239,198,77,0.7399334733893557) 8%, rgba
       display: none; /* Initially hide the menu */
       z-index: 999; 
     }
-  
+
     .nav-link-container.active {
       transform: translateY(0);
       display: flex; /* Show the menu when active */
+      background-color: #EFC64D;
     }
   
     .nav-links, .nav-links-dark {
@@ -115,7 +116,7 @@ background: radial-gradient(circle, rgba(239,198,77,0.7399334733893557) 8%, rgba
       transition: 0.2s ease-in;
       cursor: pointer;
     }
-  
+
     .nav-links-dark {
       color: #2D0B09;
     }

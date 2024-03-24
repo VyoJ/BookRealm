@@ -10,6 +10,7 @@ import { Login } from "./pages/loginnpage/login.js";
 import CartPage from "./pages/cartpage/Cartpage.js";
 import ScrollToTop from "./components/util/ScrollToTop.js";
 import SearchPage from "./pages/searchpage/SearchPage.js";
+import { UserPortal } from "./pages/userportal/UserPortal.js";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
@@ -29,7 +30,8 @@ const App = () => {
         localStorage.setItem("userId", user.uid);
         setauthenticateUser(user);
       } else {
-        setauthenticateUser("");
+        localStorage.removeItem("userId");
+        setauthenticateUser(null);
       }
     });
   }, [onAuthStateChanged]);
@@ -55,6 +57,7 @@ const App = () => {
             <Route path="/book-details/:id" element={<BookDetailsPage />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/user" element={<UserPortal />} />
           </Routes>
         </cartContext.Provider>
       </userContext.Provider>
