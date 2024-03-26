@@ -25,8 +25,8 @@ const App = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user, "from app.js");
-      console.log("userId", user.uid);
+      // console.log(user, "from app.js");
+      // console.log("userId", user.uid);
       if (user) {
         localStorage.setItem("userId", user.uid);
         setauthenticateUser(user);

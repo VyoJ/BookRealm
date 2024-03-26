@@ -45,4 +45,37 @@ router.post("/create", async (req, res) => {
   }
 });
 
+router.put('/update/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    // Find the user by ID and update the fields
+    let updatedUser = await User.findOneAndUpdate(
+      { userid: userId },
+      {
+        $set: {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          // email: req.body.email,
+          phoneno: req.body.phoneno,
+          country: req.body.country,
+          street_address: req.body.street_address,
+          city: req.body.city,
+          region: req.body.region,
+          postal_code: req.body.postal_code
+        }
+      },
+      { new: true } // to return the updated document
+    );
+
+    if (updatedUser) {
+      return res.status(200).send(updatedUser);
+    } else {
+      return res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router;
