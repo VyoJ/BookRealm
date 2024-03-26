@@ -37,6 +37,7 @@ router.post("/create", async (req, res) => {
     language: req.body.language,
     price: req.body.price,
     book_length: req.body.book_length,
+    approved: "Not Approved",
   });
   try {
     let savedBook = await book.save();
