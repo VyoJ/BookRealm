@@ -1,17 +1,17 @@
 import React from "react";
 import Navbar from '../../components/layouts/navbar/Navbar';
 import Footer from '../../components/layouts/footer/footer';
-import BookApprovalRequests from "./approval";
+import BookList from "./book";
 
 
-const BookApprovalpage = () => {
+const BookSendpage = () => {
     return (
         <section>
             <Navbar darkTheme={true} /> 
-            <BookApprovalRequests/>
+            <BookList/>
            <Footer />
         </section>
     )
 }
 
-export default BookApprovalpage;
+export default BookSendpage;

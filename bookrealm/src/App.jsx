@@ -11,7 +11,8 @@ import CartPage from "./pages/cartpage/Cartpage.js";
 import ScrollToTop from "./components/util/ScrollToTop.js";
 import SearchPage from "./pages/searchpage/SearchPage.js";
 import { UserPortal } from "./pages/userportal/UserPortal.js";
-import BookApproval from "./pages/admin/approval.js";
+import BookApprovalpage from "./pages/admin/admin.js";
+import BookSendpage from "./pages/bookfunctions/booksendpage.js";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
@@ -59,7 +60,8 @@ const App = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/user" element={<UserPortal />} />
-            <Route path="/admin" element={<BookApproval/>} />
+            <Route path="/admin" element={<BookApprovalpage/>} />
+            <Route path="/list" element={<BookSendpage/>} />
           </Routes>
         </cartContext.Provider>
       </userContext.Provider>
