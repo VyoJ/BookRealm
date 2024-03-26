@@ -59,7 +59,7 @@
 import React, { useContext, useState } from "react";
 import "./navbar.styles.css";
 import { Link, useNavigate } from "react-router-dom";
-import { userContext } from "../../../App";
+import { userContext } from "../../../app";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,

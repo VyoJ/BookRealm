@@ -10,6 +10,7 @@ import { Login } from "./pages/loginnpage/login.js";
 import CartPage from "./pages/cartpage/Cartpage.js";
 import ScrollToTop from "./components/util/ScrollToTop.js";
 import SearchPage from "./pages/searchpage/SearchPage.js";
+import BookUpload from "./pages/bookuploadpage/bookUpload.js";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
@@ -51,10 +52,10 @@ const App = () => {
             <Route path="/books" element={<BooksPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/search" element={<SearchPage />} />
-            {/* <Route path="/search" element={<SearchPage />} /> */}
             <Route path="/book-details/:id" element={<BookDetailsPage />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/bookupload" element={<BookUpload />} />
           </Routes>
         </cartContext.Provider>
       </userContext.Provider>

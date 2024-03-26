@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./detailssection.style.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { book } from "../../../util/bookData";
-import { userContext, cartContext } from "../../../App";
+import { book } from "../../../util/BookData";
+import { userContext, cartContext } from "../../../app";
+import axios from "axios";
 
 export const DetailsSection = () => {
   const { id } = useParams(); //console.log(id)
@@ -13,8 +14,8 @@ export const DetailsSection = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // //     let newData = book.filter((book) => book._id === id)
-    //     // console.log(newData[0])
+    //     let newData = book.filter((book) => book._id === id)
+    // console.log(newData[0])
     //     setbookdata(newData[0])     //[0] to get the first element/object of the newbook array
     //   })
 
@@ -29,21 +30,30 @@ export const DetailsSection = () => {
     //     }
     // }
 
-    let newData = book.filter((book) => book._id == id);
+    // let newData = book.filter((book) => book._id == id);
     // console.log(newData[0])
-    setbookdata(newData[0]); //[0] to get the first element/object of the newbook array
+    // setbookdata(newData[0]); //[0] to get the first element/object of the newbook array
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get(`http://localhost:2000/book/${id}`);
+        console.log("Book", response);
+        setbookdata(response.data);
+      } catch (error) {
+        console.error("Error fetching book:", error.message);
+      }
+    };
+
+    fetchBooks();
   }, [id]);
 
   const handelAddClick = () => {
     // console.log("from handeladdclick",user)
     if (user) {
-      //add to cart
-      setcartItem([...cartItem, bookdata]); // '...' -> spread operator
+      setcartItem([...cartItem, bookdata]);
       console.log("items in cart are", cartItem);
       alert(`The book ${bookdata.title} is added ot the cart`);
       navigate("/cart");
     } else {
-      //redirect to login page
       navigate("/login");
       alert("Please login in to your account to proceed");
     }
@@ -55,8 +65,6 @@ export const DetailsSection = () => {
         <div className="flex-container">
           <div className="book-img-container">
             <img src={bookdata.image} alt="book" className="bookimg" />
-            {/* <img src={ProductImage} alt="product-listing" className="product-listing-image" /> */}
-            {/* <img src={ProductImage} alt="product-listing" className="product-listing-image" /> */}
           </div>
           <div className="book-detail-container">
             <h2>{bookdata.title}</h2>
@@ -71,7 +79,6 @@ export const DetailsSection = () => {
               {bookdata.book_length}
             </p>
             <h3> &#8377;{bookdata.price}</h3>
-            {/* <a href="#" className='cart'>Add to cart</a> */}
             <a onClick={handelAddClick} className="button-primary">
               Add to cart
             </a>
