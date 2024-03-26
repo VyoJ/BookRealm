@@ -51,16 +51,7 @@
     border-radius: 50%; 
     object-fit: cover; 
 }
-.photo-slot-emtpy{
-  border: dotted 2px;
-  margin-left: auto;
-  margin-right: auto;
-  height:250px;
-  width: 250px;
-  background-color:#EFC64D ;
-  border-radius: 50%; 
-  object-fit: cover; 
-}
+
 
 @media screen and (max-width: 768px) {
 

@@ -1,24 +1,80 @@
-import React, { useContext, useState } from "react";
-import { userContext } from "../../app";
-import Navbar from "../../components/layouts/navbar/Navbar";
-import "./UserPortal.css";
-import upload from "./upload-pic.png";
+import React, { useContext, useState ,useEffect } from 'react'
+import { userContext } from '../../App'
+import Navbar from '../../components/layouts/navbar/Navbar'
+import './UserPortal.css'
+// import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import upload from './upload-pic.png'
+import axios from 'axios'
+
+
 
 export const UserPortal = () => {
-  const authenticateUser = useContext(userContext);
-  console.log(authenticateUser, "from user portal");
+  const authenticateUser = useContext(userContext)
+  console.log(authenticateUser, 'from user portal')
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileChange = (event) => {
+  const [personalcred, setpersonalcred] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phoneno: "",
+    country: "",
+    street_address: "",
+    city: "",
+    region: "",
+    postal_code: ""
+  });
+  const [photo, setphoto] = useState(null)
+ 
+  //photo on change
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
     const reader = new FileReader();
     reader.onload = (e) => {
       localStorage.setItem("selectedFile", e.target.result);
     };
+    console.log(photo)
     reader.readAsDataURL(file);
-    // console.log(file)
+    console.log(file)
   };
+  //personal info on change
+  const onchange = (e) => {    
+    setpersonalcred({ ...personalcred, [e.target.name]: e.target.value })
+    // console.log(personalcred)
+    // console.log("onchange is active")
+  }
+  useEffect(() => {
+    const savedData = JSON.parse(localStorage.getItem('personalcred'));
+    if (savedData) {
+      setpersonalcred(savedData);
+    }
+  }, []);
+
+ //personal info submit
+  const handlesubmit = async (e) => {
+    e.preventDefault()
+    const { first_name, last_name, email, phoneno, country, street_address, city, postal_code, region } = personalcred
+    alert('your personal information has been saved')
+    try {
+      const response = await axios.put(`http://localhost:2000/user/update/${id}`, {
+        userid: authenticateUser.user.uid, // Assuming authenticateUser contains user information including uid
+        email: email,
+        first_name: first_name,
+        last_name: last_name,
+        phoneno: phoneno,
+        country: country,
+        street_address: street_address,
+        city: city,
+        postal_code: postal_code,
+        region: region
+      });
+      console.log("Post", response);
+    
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     <section>
@@ -28,10 +84,12 @@ export const UserPortal = () => {
         This information will be only displayed to you.
       </p>
 
-      <div className="ml-9 mr-9 wrapper">
-        <form className="text-primary">
+      <div className='ml-9 mr-9 wrapper'>
+        <form className='text-primary' onSubmit={handlesubmit}>
           <div className="space-y-12 wrapper">
             <div className="infocontainer">
+
+              {/* photo */}
               <div className="info-photo">
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="col-span-full ">
@@ -41,7 +99,6 @@ export const UserPortal = () => {
                     >
                       Photo
                     </label>
-
                     <div className="text-center photo-inside">
                       <img
                         src={
@@ -50,8 +107,9 @@ export const UserPortal = () => {
                             : upload
                         }
                         alt=""
-                        className={`${selectedFile ? "photo-slot" : ""}`}
-                      />
+                        required
+                        onChange={onchange}
+                        className={`${selectedFile ? "photo-slot" : ''}`} />
                       <div className="mt-4 flex text-sm leading-6 text-gray-600">
                         <label
                           htmlFor="file-upload"
@@ -66,19 +124,12 @@ export const UserPortal = () => {
                           />
                         </label>
                       </div>
-                      {!selectedFile ? (
-                        <>
-                          <p className="pl-3">
-                            <span>Upload a file </span>
-                          </p>
-                          <p className="text-xs leading-5 text-gray-600">
-                            PNG, JPG, GIF up to 10MB
-                          </p>
-                        </>
-                      ) : (
-                        ""
-                      )}
+                      {!selectedFile ? (<>
+                        <p className="pl-3"><span>Upload a file </span></p>
+                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                      </>) : ''}
                     </div>
+
 
                     <div className="mt-2 flex items-center gap-x-3 justify-center">
                       <button
@@ -95,6 +146,7 @@ export const UserPortal = () => {
                 </div>
               </div>
 
+              {/* personal information */}
               <div className="info-photo-text">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -106,17 +158,16 @@ export const UserPortal = () => {
 
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-3">
-                      <label
-                        htmlFor="first-name"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                      <label htmlFor="first_name" className="block text-sm font-medium leading-6 text-gray-900">
                         First name
                       </label>
                       <div className="mt-2">
                         <input
                           type="text"
-                          name="first-name"
-                          id="first-name"
+                          name="first_name"
+                          id="first_name"
+                          onChange={onchange}
+                          required
                           autoComplete="given-name"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -124,17 +175,15 @@ export const UserPortal = () => {
                     </div>
 
                     <div className="sm:col-span-3">
-                      <label
-                        htmlFor="last-name"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                      <label htmlFor="last_name" className="block text-sm font-medium leading-6 text-gray-900">
                         Last name
                       </label>
                       <div className="mt-2">
                         <input
                           type="text"
-                          name="last-name"
-                          id="last-name"
+                          name="last_name"
+                          id="last_name"
+                          onChange={onchange}
                           autoComplete="family-name"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -153,7 +202,9 @@ export const UserPortal = () => {
                           id="email"
                           name="email"
                           type="email"
+                          onChange={onchange}
                           autoComplete="email"
+                          required
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -170,7 +221,11 @@ export const UserPortal = () => {
                         <input
                           id="phoneno"
                           name="phoneno"
-                          type="tel"
+                          onChange={onchange}
+                          required
+                          minLength={10}
+                          maxLength={10}
+                          type='tel'
                           autoComplete="tel"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -188,9 +243,12 @@ export const UserPortal = () => {
                         <select
                           id="country"
                           name="country"
+                          onChange={onchange}
+                          required
                           autoComplete="country-name"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
+                          <option>select</option>
                           <option>India</option>
                           <option>Canada</option>
                           <option>United States</option>
@@ -200,18 +258,17 @@ export const UserPortal = () => {
                     </div>
 
                     <div className="col-span-full">
-                      <label
-                        htmlFor="street-address"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                      <label htmlFor="street_address" className="block text-sm font-medium leading-6 text-gray-900">
                         Street address
                       </label>
                       <div className="mt-2">
                         <input
                           type="text"
-                          name="street-address"
-                          id="street-address"
-                          autoComplete="street-address"
+                          name="street_address"
+                          id="street_address"
+                          onChange={onchange}
+                          required
+                          autoComplete="street_address"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -229,6 +286,8 @@ export const UserPortal = () => {
                           type="text"
                           name="city"
                           id="city"
+                          onChange={onchange}
+                          required
                           autoComplete="address-level2"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -247,6 +306,8 @@ export const UserPortal = () => {
                           type="text"
                           name="region"
                           id="region"
+                          onChange={onchange}
+                          required
                           autoComplete="address-level1"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -254,18 +315,19 @@ export const UserPortal = () => {
                     </div>
 
                     <div className="sm:col-span-2">
-                      <label
-                        htmlFor="postal-code"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                      <label htmlFor="postal_code" className="block text-sm font-medium leading-6 text-gray-900">
                         ZIP / Postal code
                       </label>
                       <div className="mt-2">
                         <input
                           type="text"
-                          name="postal-code"
-                          id="postal-code"
-                          autoComplete="postal-code"
+                          name="postal_code"
+                          id="postal_code"
+                          onChange={onchange}
+                          required
+                          maxLength={6}
+                          minLength={6}
+                          autoComplete="postal_code"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
@@ -273,16 +335,10 @@ export const UserPortal = () => {
                   </div>
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6  ">
-                  <button
-                    type="submit"
-                    className='className="text-sm font-semibold leading-6 mr-4'
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className='className="text-sm font-semibold leading-6 mr-9'
-                  >
+                  {/* <button type='submit' id='clear' className='className="text-sm font-semibold leading-6 mr-4'>
+                    Clear
+                  </button> */}
+                  <button type='submit' id='save' className='className="text-sm font-semibold leading-6 mr-0 '>
                     Save
                   </button>
                 </div>
