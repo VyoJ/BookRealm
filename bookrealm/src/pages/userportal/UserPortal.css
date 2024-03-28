@@ -1,26 +1,23 @@
 .wrapper{
-    width: 92%;
+    width: 100%;
     height: max-content;
     /* background-color: aqua; */
     display: flex;
     justify-content: center;
-    margin: 0px 10px;
-    margin-left: 4%;
-    
 
 }
+
 .infocontainer {
   width: 100%;
   height: max-content;
   margin-top: 40px;
   /* background-color: grey; */
   display: flex;
-  gap: 100px;
-
+  gap: 80px;
 }
 
 .info-photo {
-  width: 80%;
+  width: 50%;
   height: max-content;
   display: flex;
   justify-content: center;
@@ -51,23 +48,63 @@
     border-radius: 50%; 
     object-fit: cover; 
 }
+.info-card-text {
+  /* background-color: aqua; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  /* margin-right: 0px; */
+}
+.info-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  width: 250px;
+}
 
+.info-label {
+  color: #efc64d;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
 
-@media screen and (max-width: 768px) {
+.info-value {
+  color: #2d0b09; 
+  display: block;
+  /* word-wrap: break-word; */
+  word-break: break-word;
+  max-width: calc(100% /1.5);
+  font-size: 14px;
+  font-weight: 100;  
+}
+.street{
+  width: max-content;
+  height: fit-content;
 
 }
 
-@media screen and (max-width: 768px) {
-  .wrapper{
-    width: 90%;
-  }
 
+
+@media screen and (max-width: 850px)  {
+  .wrapper{
+    width: 100%;
+  }
+  .street{
+    width: max-content;
+    height: fit-content;
+    margin-left:30px ;
+    /* margin-right: -100px; */
+    /* background-color: aqua; */
+  }
+  
     .infocontainer {
         width: 100%;
         height: max-content;
-        /* margin-top: 40px; */
-        /* margin-left: -40px; */
-        gap: 80px;
+        gap: 60px;
         display: flex;
         flex-direction:column ;
       }
@@ -77,5 +114,10 @@
         /* background-color: antiquewhite; */
         display: flex;
         justify-content: center;
+      }
+      .info-card {
+      width: 90%;
+      display: flex;
+      justify-self: center;
       }
 }
