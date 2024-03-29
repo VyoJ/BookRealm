@@ -262,204 +262,208 @@ function BookUpload() {
 
   return (
     <>
-      <Navbar darkTheme={true} />
-      <div className="text-center text-2xl mt-4">
-        Upload your <span className="text-primary">Book</span> for publication
-        approval
-      </div>
-      <div className="flex items-center justify-center p-10">
-        <div className="mx-auto w-full max-w-[550px] bg-white">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label
-                htmlFor="title"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Book Name"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="authors"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Author(s)
-              </label>
-              <input
-                type="text"
-                name="authors"
-                id="authors"
-                placeholder="Name of the author(s)"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                required
-                value={authors}
-                onChange={(e) => setAuthors(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="desc"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Book Description
-              </label>
-              <textarea
-                type="text"
-                name="desc"
-                id="desc"
-                placeholder="Enter book description"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                required
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="language"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Language
-              </label>
-              <input
-                type="text"
-                name="language"
-                id="language"
-                placeholder="Enter book language"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                required
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-              />
-            </div>
-            <div className="-mx-3 flex flex-wrap">
-              <div className="w-full px-3 sm:w-1/2">
-                <div className="mb-4">
-                  <label
-                    htmlFor="price"
-                    className="mb-3 block text-base font-medium text-[#07074D]"
-                  >
-                    Price
-                  </label>
-                  <input
-                    type="number"
-                    name="price"
-                    id="price"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    required
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="w-full px-3 sm:w-1/2">
-                <div className="mb-4">
-                  <label
-                    htmlFor="length"
-                    className="mb-3 block text-base font-medium text-[#07074D]"
-                  >
-                    Length
-                  </label>
-                  <input
-                    type="number"
-                    name="length"
-                    id="length"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    required
-                    value={length}
-                    onChange={(e) => setLength(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mb-4">
-              <label className="mb-3 block text-base font-medium text-[#07074D]">
-                Book Type
-              </label>
-              <div>
-                <input
-                  type="radio"
-                  id="physical"
-                  name="bookType"
-                  value="physical"
-                  checked={!isEbook}
-                  onChange={handleEbookChange}
-                  required
-                />
-                <label htmlFor="physical" className="ml-2">
-                  Physical Book
-                </label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="ebook"
-                  name="bookType"
-                  value="ebook"
-                  checked={isEbook}
-                  onChange={handleEbookChange}
-                  required
-                />
-                <label htmlFor="ebook" className="ml-2">
-                  Ebook
-                </label>
-              </div>
-            </div>
-            {isEbook && (
+      <section>
+
+
+        <Navbar darkTheme={true} />
+        <div className="text-center text-2xl mt-4">
+          Upload your <span className="text-primary">Book</span> for publication
+          approval
+        </div>
+        <div className="flex items-center justify-center p-10">
+          <div className="mx-auto w-full max-w-[550px] bg-white">
+            <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
-                  htmlFor="ebookFile"
+                  htmlFor="title"
                   className="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                  Ebook File
+                  Title
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  id="title"
+                  placeholder="Book Name"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  required
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="authors"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Author(s)
+                </label>
+                <input
+                  type="text"
+                  name="authors"
+                  id="authors"
+                  placeholder="Name of the author(s)"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  required
+                  value={authors}
+                  onChange={(e) => setAuthors(e.target.value)}
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="desc"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Book Description
+                </label>
+                <textarea
+                  type="text"
+                  name="desc"
+                  id="desc"
+                  placeholder="Enter book description"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  required
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="language"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Language
+                </label>
+                <input
+                  type="text"
+                  name="language"
+                  id="language"
+                  placeholder="Enter book language"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  required
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                />
+              </div>
+              <div className="-mx-3 flex flex-wrap">
+                <div className="w-full px-3 sm:w-1/2">
+                  <div className="mb-4">
+                    <label
+                      htmlFor="price"
+                      className="mb-3 block text-base font-medium text-[#07074D]"
+                    >
+                      Price
+                    </label>
+                    <input
+                      type="number"
+                      name="price"
+                      id="price"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                      required
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="w-full px-3 sm:w-1/2">
+                  <div className="mb-4">
+                    <label
+                      htmlFor="length"
+                      className="mb-3 block text-base font-medium text-[#07074D]"
+                    >
+                      Length
+                    </label>
+                    <input
+                      type="number"
+                      name="length"
+                      id="length"
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-3 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                      required
+                      value={length}
+                      onChange={(e) => setLength(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="mb-4">
+                <label className="mb-3 block text-base font-medium text-[#07074D]">
+                  Book Type
+                </label>
+                <div>
+                  <input
+                    type="radio"
+                    id="physical"
+                    name="bookType"
+                    value="physical"
+                    checked={!isEbook}
+                    onChange={handleEbookChange}
+                    required
+                  />
+                  <label htmlFor="physical" className="ml-2">
+                    Physical Book
+                  </label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="ebook"
+                    name="bookType"
+                    value="ebook"
+                    checked={isEbook}
+                    onChange={handleEbookChange}
+                    required
+                  />
+                  <label htmlFor="ebook" className="ml-2">
+                    Ebook
+                  </label>
+                </div>
+              </div>
+              {isEbook && (
+                <div className="mb-4">
+                  <label
+                    htmlFor="ebookFile"
+                    className="mb-3 block text-base font-medium text-[#07074D]"
+                  >
+                    Ebook File
+                  </label>
+                  <input
+                    type="file"
+                    id="ebookFile"
+                    name="ebookFile"
+                    onChange={handleEbookFileChange}
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white text-[#6B7280]"
+                    required
+                  />
+                </div>
+              )}
+              <div className="mb-4">
+                <label
+                  htmlFor="image"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                  Book Cover
                 </label>
                 <input
                   type="file"
-                  id="ebookFile"
-                  name="ebookFile"
-                  onChange={handleEbookFileChange}
+                  id="image"
+                  name="image"
+                  onChange={handleImageChange}
                   className="w-full rounded-md border border-[#e0e0e0] bg-white text-[#6B7280]"
                   required
                 />
               </div>
-            )}
-            <div className="mb-4">
-              <label
-                htmlFor="image"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
-                Book Cover
-              </label>
-              <input
-                type="file"
-                id="image"
-                name="image"
-                onChange={handleImageChange}
-                className="w-full rounded-md border border-[#e0e0e0] bg-white text-[#6B7280]"
-                required
-              />
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="hover:shadow-form w-full rounded-md bg-primary py-3 px-8 text-center text-base font-semibold text-secondary outline-none"
-              >
-                Submit Book Upload Application
-              </button>
-            </div>
-          </form>
+              <div>
+                <button
+                  type="submit"
+                  className="hover:shadow-form w-full rounded-md bg-primary py-3 px-8 text-center text-base font-semibold text-secondary outline-none"
+                >
+                  Submit Book Upload Application
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

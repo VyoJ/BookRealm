@@ -14,9 +14,11 @@ import BookUpload from "./pages/bookuploadpage/bookUpload.js";
 import { UserPortal } from "./pages/userportal/UserPortal.js";
 import BookApprovalpage from "./pages/admin/admin.js";
 import BookSendpage from "./pages/bookfunctions/booksendpage.js";
+import { Portalstate } from "./pages/userportal/context/Portalstate.js";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
+
 
 const App = () => {
   const auth = getAuth(fire);
@@ -24,6 +26,7 @@ const App = () => {
   const [authenticateUser, setauthenticateUser] = useState("");
   const [cartItem, setcartItem] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -47,9 +50,13 @@ const App = () => {
     setTotalAmount(total);
   }, [cartItem]);
 
+  
+
+
   return (
     <ScrollToTop>
       <userContext.Provider value={authenticateUser}>
+        <Portalstate>
         <cartContext.Provider value={{ cartItem, totalAmount, setcartItem }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -65,6 +72,7 @@ const App = () => {
             <Route path="/list" element={<BookSendpage/>} />
           </Routes>
         </cartContext.Provider>
+        </Portalstate>
       </userContext.Provider>
     </ScrollToTop>
   );

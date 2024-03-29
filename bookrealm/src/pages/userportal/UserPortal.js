@@ -1,4 +1,5 @@
-import React, { useContext, useState ,useEffect } from 'react'
+
+import React, { useContext, useState, useEffect } from 'react'
 import { userContext } from '../../App'
 import Navbar from '../../components/layouts/navbar/Navbar'
 import './UserPortal.css'
@@ -6,11 +7,9 @@ import './UserPortal.css'
 import upload from './upload-pic.png'
 import axios from 'axios'
 
-
-
 export const UserPortal = () => {
+ 
   const authenticateUser = useContext(userContext)
-  console.log(authenticateUser, 'from user portal')
   const [selectedFile, setSelectedFile] = useState(null);
   const [personalcred, setpersonalcred] = useState({
     first_name: "",
@@ -21,10 +20,12 @@ export const UserPortal = () => {
     street_address: "",
     city: "",
     region: "",
-    postal_code: ""
+    postal_code: "",
   });
-  const [photo, setphoto] = useState(null)
+  // const [photo, setphoto] = useState(null)
+  const [userData, setUserData] = useState(null);
  
+
   //photo on change
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -33,31 +34,39 @@ export const UserPortal = () => {
     reader.onload = (e) => {
       localStorage.setItem("selectedFile", e.target.result);
     };
-    console.log(photo)
+    console.log(photo);
     reader.readAsDataURL(file);
-    console.log(file)
+    console.log(file);
   };
   //personal info on change
-  const onchange = (e) => {    
-    setpersonalcred({ ...personalcred, [e.target.name]: e.target.value })
-    // console.log(personalcred)
-    // console.log("onchange is active")
-  }
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem('personalcred'));
-    if (savedData) {
-      setpersonalcred(savedData);
-    }
-  }, []);
+  const onchange = (e) => {
 
- //personal info submit
+    setpersonalcred(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+    // console.log(personalcred)
+  }
+  
+  //personal info submit
   const handlesubmit = async (e) => {
-    e.preventDefault()
-    const { first_name, last_name, email, phoneno, country, street_address, city, postal_code, region } = personalcred
-    alert('your personal information has been saved')
+    e.preventDefault();
+    const {
+      first_name,
+      last_name,
+      email,
+      phoneno,
+      country,
+      street_address,
+      city,
+      postal_code,
+      region,
+    } = personalcred;
+    alert("your personal information has been saved");
     try {
-      const response = await axios.put(`http://localhost:2000/user/update/${id}`, {
-        userid: authenticateUser.user.uid, // Assuming authenticateUser contains user information including uid
+
+      const response = await axios.put(`http://localhost:2000/user/update/${authenticateUser.uid}`, {
+        userid: authenticateUser.uid,
         email: email,
         first_name: first_name,
         last_name: last_name,
@@ -68,27 +77,48 @@ export const UserPortal = () => {
         postal_code: postal_code,
         region: region
       });
-      console.log("Post", response);
-    
+      // console.log("Post", response);
+      setUserData(response.data)
     } catch (error) {
       console.log(error);
     }
   }
 
+  const handleedit = () => {
+    setUserData(null)
+  }
+
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:2000/user/id/${authenticateUser.uid}`);
+        setUserData(response.data);
+        console.log(response)
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUserData(); 
+   
+  }, [authenticateUser.uid]);
+
+
 
   return (
-    <section>
+    <section >
       <Navbar darkTheme={true} />
       <h1 className="text-center text-primary mt-9 ">Profile</h1>
       <p className="mt-1 text-sm leading-6 text-gray-600 text-center text-primary">
         This information will be only displayed to you.
       </p>
 
-      <div className='ml-9 mr-9 wrapper'>
-        <form className='text-primary' onSubmit={handlesubmit}>
-          <div className="space-y-12 wrapper">
-            <div className="infocontainer">
 
+      <div className='wrapper'>
+        <form className='text-primary' onSubmit={handlesubmit}>
+         
+            <div className="infocontainer">
               {/* photo */}
               <div className="info-photo">
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -109,7 +139,8 @@ export const UserPortal = () => {
                         alt=""
                         required
                         onChange={onchange}
-                        className={`${selectedFile ? "photo-slot" : ''}`} />
+                        className={`${selectedFile ? "photo-slot" : ""}`}
+                      />
                       <div className="mt-4 flex text-sm leading-6 text-gray-600">
                         <label
                           htmlFor="file-upload"
@@ -124,12 +155,19 @@ export const UserPortal = () => {
                           />
                         </label>
                       </div>
-                      {!selectedFile ? (<>
-                        <p className="pl-3"><span>Upload a file </span></p>
-                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                      </>) : ''}
+                      {!selectedFile ? (
+                        <>
+                          <p className="pl-3">
+                            <span>Upload a file </span>
+                          </p>
+                          <p className="text-xs leading-5 text-gray-600">
+                            PNG, JPG, GIF up to 10MB
+                          </p>
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </div>
-
 
                     <div className="mt-2 flex items-center gap-x-3 justify-center">
                       <button
@@ -147,7 +185,8 @@ export const UserPortal = () => {
               </div>
 
               {/* personal information */}
-              <div className="info-photo-text">
+              {userData === null && 
+                (<div className="info-photo-text">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
                     Personal Information
@@ -158,7 +197,10 @@ export const UserPortal = () => {
 
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-3">
-                      <label htmlFor="first_name" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="first_name"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         First name
                       </label>
                       <div className="mt-2">
@@ -175,7 +217,10 @@ export const UserPortal = () => {
                     </div>
 
                     <div className="sm:col-span-3">
-                      <label htmlFor="last_name" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="last_name"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         Last name
                       </label>
                       <div className="mt-2">
@@ -225,7 +270,7 @@ export const UserPortal = () => {
                           required
                           minLength={10}
                           maxLength={10}
-                          type='tel'
+                          type="tel"
                           autoComplete="tel"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -258,7 +303,10 @@ export const UserPortal = () => {
                     </div>
 
                     <div className="col-span-full">
-                      <label htmlFor="street_address" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="street_address"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         Street address
                       </label>
                       <div className="mt-2">
@@ -315,7 +363,10 @@ export const UserPortal = () => {
                     </div>
 
                     <div className="sm:col-span-2">
-                      <label htmlFor="postal_code" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label
+                        htmlFor="postal_code"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
                         ZIP / Postal code
                       </label>
                       <div className="mt-2">
@@ -335,18 +386,68 @@ export const UserPortal = () => {
                   </div>
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6  ">
-                  {/* <button type='submit' id='clear' className='className="text-sm font-semibold leading-6 mr-4'>
+                  <button type='submit' id='clear' className='className="text-sm font-semibold leading-6 mr-4'>
                     Clear
-                  </button> */}
-                  <button type='submit' id='save' className='className="text-sm font-semibold leading-6 mr-0 '>
+
+                  </button>
+               <button type='submit' id='save' className='className="text-sm font-semibold leading-6 mr-0 button-primary'>
                     Save
                   </button>
                 </div>
-              </div>
+              </div>)}
+
+            {userData !== null && 
+              (<div className="info-card-text">
+                <div className="border-b border-gray-900/10 pb-12 ">
+                  <h2 className="text-base font-semibold leading-7 text-gray-900 ml-7">Personal Information </h2>
+                  <div className="mt-10 grid grid-cols-1 gap-x-0.5 gap-y-5 sm:grid-cols-2 ">
+                    <div className="info-card">
+                      <span className="info-label">First Name :</span>
+                      <span className="info-value">{userData.first_name}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Last Name :</span>
+                      <span className="info-value">{userData.last_name}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Email :</span>
+                      <span className="info-value">{userData.email}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Phone Number :</span>
+                      <span className="info-value">{userData.phoneno}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Country :</span>
+                      <span className="info-value">{userData.country}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">City :</span>
+                      <span className="info-value">{userData.city}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Region :</span>
+                      <span className="info-value">{userData.region}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Postal Code : </span>
+                      <span className="info-value">{userData.postal_code}</span>
+                    </div>
+                  </div>
+                    <div className="info-card street ">
+                      <span className="info-label">Street Address :</span>
+                      <p className="info-value">{userData.street_address}</p>
+                    </div>
+                </div>
+              <button className='button-primary' onClick={handleedit}>edit</button>
+              </div>)}
+
+
+
             </div>
-          </div>
+
         </form>
       </div>
     </section>
-  );
-};
+  )
+}
