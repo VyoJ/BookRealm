@@ -22,7 +22,6 @@ export const cartContext = createContext({});
 
 const App = () => {
   const auth = getAuth(fire);
-
   const [authenticateUser, setauthenticateUser] = useState("");
   const [cartItem, setcartItem] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);

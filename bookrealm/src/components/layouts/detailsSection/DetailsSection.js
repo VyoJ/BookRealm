@@ -42,7 +42,6 @@ export const DetailsSection = () => {
         console.error("Error fetching book:", error.message);
       }
     };
-
     fetchBooks();
   }, [id]);
 
@@ -52,7 +51,7 @@ export const DetailsSection = () => {
       setcartItem([...cartItem, bookdata]);
       console.log("items in cart are", cartItem);
       alert(`The book ${bookdata.title} is added ot the cart`);
-      navigate("/cart");
+      navigate(`/book-details/${bookdata._id}`);
     } else {
       navigate("/login");
       alert("Please login in to your account to proceed");
@@ -67,7 +66,7 @@ export const DetailsSection = () => {
             <img src={bookdata.image} alt="book" className="bookimg" />
           </div>
           <div className="book-detail-container">
-            <h2>{bookdata.title}</h2>
+            <h2  className="text-primary"><b>{bookdata.title}</b></h2>
             <p className="text-primary">{bookdata.authors}</p>
             <p className="book-description">{bookdata.subtitle}</p>
             <p>

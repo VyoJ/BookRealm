@@ -7,7 +7,7 @@ import Footer from "../../components/layouts/footer/footer";
 
 const BooksPage = () => {
   return (
-    <section>
+    <section className="bookpage">
       <Navbar darkTheme={true} />
 
       <div className="search-container val">
