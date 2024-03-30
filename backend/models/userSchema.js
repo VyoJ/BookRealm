@@ -41,6 +41,10 @@ let userSchema = new Schema({
   postal_code: {
     type: String,
     default: ''
+  },
+  image: {
+    data: Buffer, 
+    contentType: String 
   }
 });
 
