@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./detailssection.style.css";
 import { useParams, useNavigate } from "react-router-dom";
-// import { book } from "../../../util/BookData";
+import { book } from "../../../util/bookData";
 import { userContext, cartContext } from "../../../App";
 import axios from "axios";
 

@@ -3,49 +3,52 @@ let Schema = mongoose.Schema;
 
 let userSchema = new Schema({
   userid: {
-     type: String, 
-     required: true 
-    },
-  email: { 
-    type: String, 
-    required: true 
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
   },
   first_name: {
     type: String,
-    default: ''
+    default: "",
   },
   last_name: {
     type: String,
-    default: ''
+    default: "",
   },
   phoneno: {
     type: String,
-    default: ''
+    default: "",
   },
   country: {
     type: String,
-    default: ''
+    default: "",
   },
   street_address: {
     type: String,
-    default: ''
+    default: "",
   },
   city: {
     type: String,
-    default: ''
+    default: "",
   },
   region: {
     type: String,
-    default: ''
+    default: "",
   },
   postal_code: {
     type: String,
+
     default: ''
   },
-  image: {
-    data: Buffer, 
-    contentType: String 
-  }
+  // image: {
+  //   data: Buffer, 
+  //   contentType: String ,
+  //   default:''
+  // }
+
 });
 
 module.exports = mongoose.model("User", userSchema);
