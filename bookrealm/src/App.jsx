@@ -14,7 +14,7 @@ import BookUpload from "./pages/bookuploadpage/bookUpload.js";
 import { UserPortal } from "./pages/userportal/UserPortal.js";
 import BookApprovalpage from "./pages/admin/admin.js";
 import BookSendpage from "./pages/bookfunctions/booksendpage.js";
-import { Portalstate } from "./pages/userportal/context/Portalstate.js";
+// import { Portalstate } from "./pages/userportal/context/Portalstate.js";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
@@ -56,7 +56,7 @@ const App = () => {
   return (
     <ScrollToTop>
       <userContext.Provider value={authenticateUser}>
-        <Portalstate>
+        {/* <Portalstate> */}
         <cartContext.Provider value={{ cartItem, totalAmount, setcartItem }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -72,7 +72,7 @@ const App = () => {
             <Route path="/list" element={<BookSendpage/>} />
           </Routes>
         </cartContext.Provider>
-        </Portalstate>
+        {/* </Portalstate> */}
       </userContext.Provider>
     </ScrollToTop>
   );

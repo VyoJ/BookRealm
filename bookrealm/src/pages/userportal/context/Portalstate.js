@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import portalcontext from './portalcontext';
 import { userContext } from '../../../App';
 import axios from 'axios';
@@ -9,21 +9,23 @@ export const Portalstate = (props) => {
   const [userData, setUserData] = useState(null);
   const authenticateUser = useContext(userContext);
 
-  const getdetails = async () => {
+  useEffect(() => {
+    getDetails();
+  }, [authenticateUser.uid]); // Fetch data whenever authenticateUser.uid changes
+
+  const getDetails = async () => {
     try {
-      const response = await axios.get(`${host}/user/id/${authenticateUser.uid}`); // Access authenticateUser.uid instead of authenticateUser
-      console.log(response);
-      setUserData(response.data)
+      const response = await axios.get(`${host}/user/id/${authenticateUser.uid}`);
+      setUserData(response.data);
     } catch (error) {
       console.error('Error fetching user details:', error);
     }
   };
 
   return (
-    <portalcontext.Provider value={{ getdetails ,userData}}>
+    <portalcontext.Provider value={{ userData }}>
       {props.children}
-      {UserPortal}
+      <UserPortal />
     </portalcontext.Provider>
   );
-
 }
