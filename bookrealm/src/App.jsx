@@ -15,17 +15,16 @@ import { UserPortal } from "./pages/userportal/UserPortal.js";
 import BookApprovalpage from "./pages/admin/admin.js";
 import BookSendpage from "./pages/bookfunctions/booksendpage.js";
 // import { Portalstate } from "./pages/userportal/context/Portalstate.js";
+import MyBooks from "./pages/mybooks/mybooks.js";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
-
 
 const App = () => {
   const auth = getAuth(fire);
   const [authenticateUser, setauthenticateUser] = useState("");
   const [cartItem, setcartItem] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -49,9 +48,6 @@ const App = () => {
     setTotalAmount(total);
   }, [cartItem]);
 
-  
-
-
   return (
     <ScrollToTop>
       <userContext.Provider value={authenticateUser}>
@@ -67,8 +63,9 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/bookupload" element={<BookUpload />} />
             <Route path="/user" element={<UserPortal />} />
-            <Route path="/admin" element={<BookApprovalpage/>} />
-            <Route path="/list" element={<BookSendpage/>} />
+            <Route path="/admin" element={<BookApprovalpage />} />
+            <Route path="/list" element={<BookSendpage />} />
+            <Route path="/mybooks" element={<MyBooks />} />
           </Routes>
         </cartContext.Provider>
         {/* </Portalstate> */}
