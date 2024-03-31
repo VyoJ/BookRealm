@@ -73,7 +73,7 @@ const BookList = () => {
 
   const deleteBook = async (id) => {
     try {
-      await axios.delete(`/api/books/delete/${id}`);
+      await axios.delete(`http://localhost:2000/book/delete/${id}`);
       setBooks(books.filter((book) => book._id !== id));
     } catch (error) {
       console.error("Error deleting book:", error);
