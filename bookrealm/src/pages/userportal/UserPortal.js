@@ -6,6 +6,7 @@ import './UserPortal.css'
 // import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import upload from './upload-pic.png'
 import axios from 'axios'
+import Footer from '../../components/layouts/footer/footer'
 
 export const UserPortal = () => {
  
@@ -25,7 +26,6 @@ export const UserPortal = () => {
   // const [photo, setphoto] = useState(null)
   const [userData, setUserData] = useState(null);
  
-
   //photo on change
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -37,6 +37,12 @@ export const UserPortal = () => {
     console.log(photo);
     reader.readAsDataURL(file);
     console.log(file);
+    // const a = reader.readAsDataURL(file);
+    // const b = URL.createObjectURL(selectedFile)
+    // console.log(a,'a')
+    // console.log(b,'b')
+    // console.log(file,'file')
+    // console.log(selectedFile,'selectedfile')
   };
   //personal info on change
   const onchange = (e) => {
@@ -47,6 +53,8 @@ export const UserPortal = () => {
     }))
     // console.log(personalcred)
   }
+  // const imageData = localStorage.getItem('selectedFile');
+  // // console.log(imageData)
   
   //personal info submit
   const handlesubmit = async (e) => {
@@ -75,7 +83,8 @@ export const UserPortal = () => {
         street_address: street_address,
         city: city,
         postal_code: postal_code,
-        region: region
+        region: region,
+        // image:selectedFile
       });
       // console.log("Post", response);
       setUserData(response.data)
@@ -84,28 +93,26 @@ export const UserPortal = () => {
     }
   }
 
-  const handleedit = () => {
-    setUserData(null)
-  }
-
-
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`http://localhost:2000/user/id/${authenticateUser.uid}`);
         setUserData(response.data);
-        console.log(response)
+        // console.log(response)
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
     fetchUserData(); 
-   
   }, [authenticateUser.uid]);
 
-
-
+  const handleedit = () => {
+    setUserData(null)
+  }
+  if(authenticateUser.length===0){
+  setUserData(null)
+  console.log(authenticateUser.length)
+  }
   return (
     <section >
       <Navbar darkTheme={true} />
@@ -211,7 +218,7 @@ export const UserPortal = () => {
                           onChange={onchange}
                           required
                           autoComplete="given-name"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -230,7 +237,7 @@ export const UserPortal = () => {
                           id="last_name"
                           onChange={onchange}
                           autoComplete="family-name"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -247,10 +254,12 @@ export const UserPortal = () => {
                           id="email"
                           name="email"
                           type="email"
-                          onChange={onchange}
+                          // onChange={onchange}
+                          // placeholder={authenticateUser.email}
+                          value={authenticateUser.email}
+                          readOnly={true}
                           autoComplete="email"
-                          required
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -268,11 +277,12 @@ export const UserPortal = () => {
                           name="phoneno"
                           onChange={onchange}
                           required
+                          pattern="[0-9]*"
                           minLength={10}
                           maxLength={10}
                           type="tel"
                           autoComplete="tel"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -317,7 +327,7 @@ export const UserPortal = () => {
                           onChange={onchange}
                           required
                           autoComplete="street_address"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -337,7 +347,7 @@ export const UserPortal = () => {
                           onChange={onchange}
                           required
                           autoComplete="address-level2"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -357,7 +367,7 @@ export const UserPortal = () => {
                           onChange={onchange}
                           required
                           autoComplete="address-level1"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -372,14 +382,14 @@ export const UserPortal = () => {
                       <div className="mt-2">
                         <input
                           type="text"
+                          pattern="[0-9]*"
                           name="postal_code"
                           id="postal_code"
                           onChange={onchange}
                           required
                           maxLength={6}
-                          minLength={6}
                           autoComplete="postal_code"
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -441,13 +451,10 @@ export const UserPortal = () => {
                 </div>
               <button className='button-primary' onClick={handleedit}>edit</button>
               </div>)}
-
-
-
             </div>
-
         </form>
       </div>
+      <Footer/>
     </section>
   )
 }

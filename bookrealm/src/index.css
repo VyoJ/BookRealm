@@ -9,6 +9,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Hanken Grotesk;
+  
   /* background-color: aquamarine; */
 }
 
@@ -46,6 +47,9 @@ h1 {
 }
 .text-primary {
   color: var(--primary-color);
+}
+.text-secondary{
+  color:var(--primary-color-bright)
 }
 span {
   font-family: Chivo Mono;
