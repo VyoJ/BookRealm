@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./detailssection.style.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { book } from "../../../util/bookData";
 import { userContext, cartContext } from "../../../App";
 import axios from "axios";
 
 export const DetailsSection = () => {
   const { id } = useParams(); //console.log(id)
-  const [bookdata, setbookdata] = useState({});
+  const [bookdata, setbookdata] = useState([]);
   const user = useContext(userContext);
   const { cartItem, setcartItem } = useContext(cartContext);
 

@@ -20,7 +20,7 @@ router.get("/:id", async (req, res) => {
     console.log(book);
     return res.status(200).send(book);
   } catch (error) {
-    console.log(error); 
+    console.log(error);
     return res.status(404).send("Could not find requested book");
   }
 });
