@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import "./cart-item-card.style.css";
-import { cartContext } from "../../../app";
+import { cartContext } from "../../../App";
 
 const CartItemCard = ({ bookdata }) => {
   const { cartItem, setcartItem } = useContext(cartContext);
-  console.log(bookdata);
+  // console.log(bookdata);
   const handleRemove = () => {
-    console.log(bookdata);
+    // console.log(bookdata);
     setcartItem(cartItem.filter((item) => item._id !== bookdata._id));
   };
 

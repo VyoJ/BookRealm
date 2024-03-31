@@ -1,13 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
-import { userContext } from "../../app";
-import Navbar from "../../components/layouts/navbar/Navbar";
-import "./UserPortal.css";
-import upload from "./upload-pic.png";
-import axios from "axios";
+
+import React, { useContext, useState, useEffect } from 'react'
+import { userContext } from '../../App'
+import Navbar from '../../components/layouts/navbar/Navbar'
+import './UserPortal.css'
+// import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import upload from './upload-pic.png'
+import axios from 'axios'
 
 export const UserPortal = () => {
-  const authenticateUser = useContext(userContext);
-  console.log(authenticateUser, "from user portal");
+ 
+  const authenticateUser = useContext(userContext)
   const [selectedFile, setSelectedFile] = useState(null);
   const [personalcred, setpersonalcred] = useState({
     first_name: "",
@@ -20,7 +22,9 @@ export const UserPortal = () => {
     region: "",
     postal_code: "",
   });
-  const [photo, setphoto] = useState(null);
+  // const [photo, setphoto] = useState(null)
+  const [userData, setUserData] = useState(null);
+ 
 
   //photo on change
   const handleFileChange = async (event) => {
@@ -36,17 +40,14 @@ export const UserPortal = () => {
   };
   //personal info on change
   const onchange = (e) => {
-    setpersonalcred({ ...personalcred, [e.target.name]: e.target.value });
-    // console.log(personalcred)
-    // console.log("onchange is active")
-  };
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("personalcred"));
-    if (savedData) {
-      setpersonalcred(savedData);
-    }
-  }, []);
 
+    setpersonalcred(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+    // console.log(personalcred)
+  }
+  
   //personal info submit
   const handlesubmit = async (e) => {
     e.preventDefault();
@@ -63,38 +64,60 @@ export const UserPortal = () => {
     } = personalcred;
     alert("your personal information has been saved");
     try {
-      const response = await axios.put(
-        `http://localhost:2000/user/update/${id}`,
-        {
-          userid: authenticateUser.user.uid,
-          email: email,
-          first_name: first_name,
-          last_name: last_name,
-          phoneno: phoneno,
-          country: country,
-          street_address: street_address,
-          city: city,
-          postal_code: postal_code,
-          region: region,
-        }
-      );
-      console.log("Post", response);
+
+      const response = await axios.put(`http://localhost:2000/user/update/${authenticateUser.uid}`, {
+        userid: authenticateUser.uid,
+        email: email,
+        first_name: first_name,
+        last_name: last_name,
+        phoneno: phoneno,
+        country: country,
+        street_address: street_address,
+        city: city,
+        postal_code: postal_code,
+        region: region
+      });
+      // console.log("Post", response);
+      setUserData(response.data)
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+
+  const handleedit = () => {
+    setUserData(null)
+  }
+
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:2000/user/id/${authenticateUser.uid}`);
+        setUserData(response.data);
+        console.log(response)
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUserData(); 
+   
+  }, [authenticateUser.uid]);
+
+
 
   return (
-    <section>
+    <section >
       <Navbar darkTheme={true} />
       <h1 className="text-center text-primary mt-9 ">Profile</h1>
       <p className="mt-1 text-sm leading-6 text-gray-600 text-center text-primary">
         This information will be only displayed to you.
       </p>
 
-      <div className="ml-9 mr-9 wrapper">
-        <form className="text-primary" onSubmit={handlesubmit}>
-          <div className="space-y-12 wrapper">
+
+      <div className='wrapper'>
+        <form className='text-primary' onSubmit={handlesubmit}>
+         
             <div className="infocontainer">
               {/* photo */}
               <div className="info-photo">
@@ -162,7 +185,8 @@ export const UserPortal = () => {
               </div>
 
               {/* personal information */}
-              <div className="info-photo-text">
+              {userData === null && 
+                (<div className="info-photo-text">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
                     Personal Information
@@ -362,22 +386,68 @@ export const UserPortal = () => {
                   </div>
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6  ">
-                  {/* <button type='submit' id='clear' className='className="text-sm font-semibold leading-6 mr-4'>
+                  <button type='submit' id='clear' className='className="text-sm font-semibold leading-6 mr-4'>
                     Clear
-                  </button> */}
-                  <button
-                    type="submit"
-                    id="save"
-                    className='className="text-sm font-semibold leading-6 mr-0 '
-                  >
+
+                  </button>
+               <button type='submit' id='save' className='className="text-sm font-semibold leading-6 mr-0 button-primary'>
                     Save
                   </button>
                 </div>
-              </div>
+              </div>)}
+
+            {userData !== null && 
+              (<div className="info-card-text">
+                <div className="border-b border-gray-900/10 pb-12 ">
+                  <h2 className="text-base font-semibold leading-7 text-gray-900 ml-7">Personal Information </h2>
+                  <div className="mt-10 grid grid-cols-1 gap-x-0.5 gap-y-5 sm:grid-cols-2 ">
+                    <div className="info-card">
+                      <span className="info-label">First Name :</span>
+                      <span className="info-value">{userData.first_name}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Last Name :</span>
+                      <span className="info-value">{userData.last_name}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Email :</span>
+                      <span className="info-value">{userData.email}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Phone Number :</span>
+                      <span className="info-value">{userData.phoneno}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Country :</span>
+                      <span className="info-value">{userData.country}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">City :</span>
+                      <span className="info-value">{userData.city}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Region :</span>
+                      <span className="info-value">{userData.region}</span>
+                    </div>
+                    <div className="info-card">
+                      <span className="info-label">Postal Code : </span>
+                      <span className="info-value">{userData.postal_code}</span>
+                    </div>
+                  </div>
+                    <div className="info-card street ">
+                      <span className="info-label">Street Address :</span>
+                      <p className="info-value">{userData.street_address}</p>
+                    </div>
+                </div>
+              <button className='button-primary' onClick={handleedit}>edit</button>
+              </div>)}
+
+
+
             </div>
-          </div>
+
         </form>
       </div>
     </section>
-  );
-};
+  )
+}
