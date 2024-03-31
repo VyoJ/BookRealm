@@ -1,6 +1,7 @@
 
 import React, { useContext, useState, useEffect } from 'react'
 import { userContext } from '../../App'
+import { Link } from "react-router-dom";
 import Navbar from '../../components/layouts/navbar/Navbar'
 import './UserPortal.css'
 // import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
@@ -9,7 +10,7 @@ import axios from 'axios'
 import Footer from '../../components/layouts/footer/footer'
 
 export const UserPortal = () => {
- 
+
   const authenticateUser = useContext(userContext)
   const [selectedFile, setSelectedFile] = useState(null);
   const [personalcred, setpersonalcred] = useState({
@@ -25,7 +26,7 @@ export const UserPortal = () => {
   });
   // const [photo, setphoto] = useState(null)
   const [userData, setUserData] = useState(null);
- 
+
   //photo on change
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -34,7 +35,7 @@ export const UserPortal = () => {
     reader.onload = (e) => {
       localStorage.setItem("selectedFile", e.target.result);
     };
-    console.log(photo);
+    // console.log(photo);
     reader.readAsDataURL(file);
     console.log(file);
     // const a = reader.readAsDataURL(file);
@@ -55,7 +56,7 @@ export const UserPortal = () => {
   }
   // const imageData = localStorage.getItem('selectedFile');
   // // console.log(imageData)
-  
+
   //personal info submit
   const handlesubmit = async (e) => {
     e.preventDefault();
@@ -103,16 +104,16 @@ export const UserPortal = () => {
         console.error('Error fetching user data:', error);
       }
     };
-    fetchUserData(); 
+    fetchUserData();
   }, [authenticateUser.uid]);
 
   const handleedit = () => {
     setUserData(null)
   }
-  if(authenticateUser.length===0){
-  setUserData(null)
-  console.log(authenticateUser.length)
-  }
+  // if(authenticateUser.length===0){
+  // setUserData(null)
+  // console.log(authenticateUser.length)
+  // }
   return (
     <section >
       <Navbar darkTheme={true} />
@@ -124,76 +125,76 @@ export const UserPortal = () => {
 
       <div className='wrapper'>
         <form className='text-primary' onSubmit={handlesubmit}>
-         
-            <div className="infocontainer">
-              {/* photo */}
-              <div className="info-photo">
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="col-span-full ">
-                    <label
-                      htmlFor="photo"
-                      className="block text-sm font-medium leading-6 text-gray-900 mb-5 text-center"
-                    >
-                      Photo
-                    </label>
-                    <div className="text-center photo-inside">
-                      <img
-                        src={
-                          selectedFile
-                            ? URL.createObjectURL(selectedFile)
-                            : upload
-                        }
-                        alt=""
-                        required
-                        onChange={onchange}
-                        className={`${selectedFile ? "photo-slot" : ""}`}
-                      />
-                      <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                        <label
-                          htmlFor="file-upload"
-                          className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                        >
-                          <input
-                            id="file-upload"
-                            name="file-upload"
-                            type="file"
-                            className="sr-only"
-                            onChange={handleFileChange}
-                          />
-                        </label>
-                      </div>
-                      {!selectedFile ? (
-                        <>
-                          <p className="pl-3">
-                            <span>Upload a file </span>
-                          </p>
-                          <p className="text-xs leading-5 text-gray-600">
-                            PNG, JPG, GIF up to 10MB
-                          </p>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </div>
 
-                    <div className="mt-2 flex items-center gap-x-3 justify-center">
-                      <button
-                        type="button"
-                        className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mt-5"
-                        onClick={() => {
-                          document.getElementById("file-upload").click();
-                        }}
+          <div className="infocontainer">
+            {/* photo */}
+            <div className="info-photo">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="col-span-full ">
+                  <label
+                    htmlFor="photo"
+                    className="block text-sm font-medium leading-6 text-gray-900 mb-5 text-center"
+                  >
+                    Photo
+                  </label>
+                  <div className="text-center photo-inside">
+                    <img
+                      src={
+                        selectedFile
+                          ? URL.createObjectURL(selectedFile)
+                          : upload
+                      }
+                      alt=""
+                      required
+                      onChange={onchange}
+                      className={`${selectedFile ? "photo-slot" : ""}`}
+                    />
+                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                      <label
+                        htmlFor="file-upload"
+                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                       >
-                        Change
-                      </button>
+                        <input
+                          id="file-upload"
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                          onChange={handleFileChange}
+                        />
+                      </label>
                     </div>
+                    {!selectedFile ? (
+                      <>
+                        <p className="pl-3">
+                          <span>Upload a file </span>
+                        </p>
+                        <p className="text-xs leading-5 text-gray-600">
+                          PNG, JPG, GIF up to 10MB
+                        </p>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+
+                  <div className="mt-2 flex items-center gap-x-3 justify-center">
+                    <button
+                      type="button"
+                      className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mt-5"
+                      onClick={() => {
+                        document.getElementById("file-upload").click();
+                      }}
+                    >
+                      Change
+                    </button>
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* personal information */}
-              {userData === null && 
-                (<div className="info-photo-text">
+            {/* personal information */}
+            {userData === null &&
+              (<div className="info-photo-text">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
                     Personal Information
@@ -396,17 +397,13 @@ export const UserPortal = () => {
                   </div>
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6  ">
-                  <button type='submit' id='clear' className='className="text-sm font-semibold leading-6 mr-4'>
-                    Clear
-
-                  </button>
-               <button type='submit' id='save' className='className="text-sm font-semibold leading-6 mr-0 button-primary'>
+                  <button type='submit' id='save' className='className="text-sm font-semibold leading-6 mr-0 button-primary'>
                     Save
                   </button>
                 </div>
               </div>)}
 
-            {userData !== null && 
+            {userData !== null &&
               (<div className="info-card-text">
                 <div className="border-b border-gray-900/10 pb-12 ">
                   <h2 className="text-base font-semibold leading-7 text-gray-900 ml-7">Personal Information </h2>
@@ -444,17 +441,46 @@ export const UserPortal = () => {
                       <span className="info-value">{userData.postal_code}</span>
                     </div>
                   </div>
-                    <div className="info-card street ">
-                      <span className="info-label">Street Address :</span>
-                      <p className="info-value">{userData.street_address}</p>
-                    </div>
+                  <div className="info-card street ">
+                    <span className="info-label">Street Address :</span>
+                    <p className="info-value">{userData.street_address}</p>
+                  </div>
                 </div>
-              <button className='button-primary' onClick={handleedit}>edit</button>
+                <button className='button-primary' onClick={handleedit}>edit</button>
               </div>)}
-            </div>
+          </div>
         </form>
+
       </div>
-      <Footer/>
+      <div className='user-options-wrapper'>
+        <div className='user-options-container'>
+
+          <div className="user-upload-option">
+            <div className="user-upload-option-text">
+              <h2>You can upload the books from here</h2>
+            </div>
+            <button><Link
+              to="/bookupload"
+              className="button-primary"
+            >
+              upload
+            </Link></button>
+          </div>
+          <div className="user-upload-option">
+          <div className="user-upload-option-text">
+              <h2>Check the Books in your Gallery</h2>
+            </div>
+            <button><Link
+              to="/mybooks"
+              className="button-primary"
+            >
+              MyBooks
+            </Link></button>
+          </div>
+        </div>
+
+      </div>
+      <Footer />
     </section>
   )
 }

@@ -11,7 +11,7 @@ export const CartItemContainer = () => {
   const navigate = useNavigate()
   let itemBought = null
   let Token = null
-  const [Bought, setBought] = useState([]);
+  // const [Bought, setBought] = useState([]);
   console.log(itemBought,"itemBought")
 
   const onToken = async (token) => {
@@ -22,9 +22,9 @@ export const CartItemContainer = () => {
     alert('your payment has been processed')
     itemBought = cartItem
     navigate('/books')
-    setBought([cartItem])
+    // setBought([cartItem])
   }
-  console.log(Bought)
+  // console.log(Bought)
   // console.log("cartitem container");
   // console.log(cartItem);
   return (
