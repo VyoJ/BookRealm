@@ -1,9 +1,7 @@
-
 import React, { useContext, useState, useEffect } from 'react'
 import { userContext } from '../../App'
 import Navbar from '../../components/layouts/navbar/Navbar'
 import './UserPortal.css'
-// import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import upload from './upload-pic.png'
 import axios from 'axios'
 import Footer from '../../components/layouts/footer/footer'
