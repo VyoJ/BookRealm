@@ -63,6 +63,7 @@ import { userContext } from "../../../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
+  
   faTimes,
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
