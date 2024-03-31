@@ -24,8 +24,8 @@ const Footer = () => {
   };
 
   return (
-    <section className="footer-container">
-      <div className="container">
+    <section className="footer-container mt-12">
+      <div className="container ">
         <h2>If you have any queries feel free to ask here.</h2>
 
         <form onSubmit={handleSubmit} ref={form} className="footer-form">

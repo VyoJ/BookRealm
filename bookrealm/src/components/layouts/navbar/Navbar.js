@@ -63,12 +63,12 @@ import { userContext } from "../../../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
+  
   faTimes,
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import { getAuth, signOut } from "firebase/auth";
 import fire from "../../../firebase/Firebase";
-// import {getSelectedFile} from '../../../pages/userportal.js'
 
 export default function Navbar({ darkTheme, darkTextTheme }) {
   const user = useContext(userContext);

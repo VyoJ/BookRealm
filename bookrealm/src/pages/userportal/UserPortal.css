@@ -4,7 +4,6 @@
     /* background-color: aqua; */
     display: flex;
     justify-content: center;
-
 }
 
 .infocontainer {
@@ -22,6 +21,7 @@
   display: flex;
   justify-content: center;
   /* background-color: antiquewhite; */
+  margin-top: -35px;
 }
 
 .photo-inside{
