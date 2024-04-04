@@ -25,7 +25,7 @@ const App = () => {
   const [authenticateUser, setauthenticateUser] = useState("");
   const [cartItem, setcartItem] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-
+console.log(cartItem,"cartitem form app.js")
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
