@@ -2,6 +2,21 @@ const express = require("express");
 const router = express.Router();
 const Txn = require("../models/txnSchema");
 
+router.post("/", async (req, res) => {
+  try {
+    if (req.body.user === "admin") {
+      let txns = await Txn.find();
+      console.log(txns);
+      return res.status(200).send(txns);
+    } else {
+      return res.status(401).send("Unauthorised");
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(404).send("Could not find any transactions");
+  }
+});
+
 router.get("/:id", async (req, res) => {
   try {
     let txns = await Txn.find({ userid: req.params.id });
