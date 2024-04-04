@@ -1,9 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./cart-item-card.style.css";
 import { cartContext } from "../../../App";
+import { useLocation } from "react-router-dom";
 
 const CartItemCard = ({ bookdata }) => {
+  const location = useLocation()
+  console.log(location)
   const { cartItem, setcartItem } = useContext(cartContext);
+  const [options,setoptions] = useState(location.state.options)
+  const  order_type = location.state.type
+  console.log(order_type)
   // console.log(bookdata);
   const handleRemove = () => {
     // console.log(bookdata);
@@ -20,16 +26,18 @@ const CartItemCard = ({ bookdata }) => {
         />
       </div>
       <div className="cart-item-content-container">
-        <h3>{bookdata.title}</h3>
+        <h2 className="text-primary"><b>{bookdata.title}</b></h2>
         <p>{bookdata.authors}</p>
+        <p>Quantity : {options.quantity}</p>
+        <p>Order-Type : {order_type}</p>
         <h3 className="cart-item-price">&#8377;{bookdata.price}</h3>
-
-        <button onClick={handleRemove} className="delete_btn">
+        
+        <button onClick={handleRemove} className="delete_button">
           Remove from Cart
         </button>
       </div>
     </section>
-  );
+  );v
 };
 
 export default CartItemCard;
