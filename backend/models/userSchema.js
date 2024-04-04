@@ -40,15 +40,12 @@ let userSchema = new Schema({
   },
   postal_code: {
     type: String,
-
-    default: ''
+    default: "",
   },
-  // image: {
-  //   data: Buffer, 
-  //   contentType: String ,
-  //   default:''
-  // }
-
+  image: {
+    type: String,
+    default: "",
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

@@ -1,16 +1,19 @@
-
-import React, { useContext, useState, useEffect } from 'react'
-import { userContext } from '../../App'
-import Navbar from '../../components/layouts/navbar/Navbar'
-import './UserPortal.css'
-// import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import upload from './upload-pic.png'
-import axios from 'axios'
-import Footer from '../../components/layouts/footer/footer'
+import React, { useContext, useState, useEffect } from "react";
+import { userContext } from "../../App";
+import Navbar from "../../components/layouts/navbar/Navbar";
+import "./UserPortal.css";
+import upload from "./upload-pic.png";
+import axios from "axios";
+import Footer from "../../components/layouts/footer/footer";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 export const UserPortal = () => {
- 
-  const authenticateUser = useContext(userContext)
+  const authenticateUser = useContext(userContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [personalcred, setpersonalcred] = useState({
     first_name: "",
@@ -22,41 +25,43 @@ export const UserPortal = () => {
     city: "",
     region: "",
     postal_code: "",
+    photo: "",
   });
-  // const [photo, setphoto] = useState(null)
   const [userData, setUserData] = useState(null);
- 
-  //photo on change
+
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      localStorage.setItem("selectedFile", e.target.result);
-    };
-    console.log(photo);
-    reader.readAsDataURL(file);
-    console.log(file);
-    // const a = reader.readAsDataURL(file);
-    // const b = URL.createObjectURL(selectedFile)
-    // console.log(a,'a')
-    // console.log(b,'b')
-    // console.log(file,'file')
-    // console.log(selectedFile,'selectedfile')
-  };
-  //personal info on change
-  const onchange = (e) => {
+    const storage = getStorage();
+    const storageRef = ref(storage, `userPhotos/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
-    setpersonalcred(prevState => ({
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.error("Upload failed:", error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setpersonalcred((prevState) => ({
+            ...prevState,
+            photo: downloadURL,
+          }));
+        });
+      }
+    );
+  };
+
+  const onchange = (e) => {
+    setpersonalcred((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
-    }))
+      [e.target.name]: e.target.value,
+    }));
     // console.log(personalcred)
-  }
-  // const imageData = localStorage.getItem('selectedFile');
-  // // console.log(imageData)
-  
-  //personal info submit
+  };
+
   const handlesubmit = async (e) => {
     e.preventDefault();
     const {
@@ -69,131 +74,131 @@ export const UserPortal = () => {
       city,
       postal_code,
       region,
+      photo,
     } = personalcred;
+    console.log(personalcred);
     alert("your personal information has been saved");
     try {
-
-      const response = await axios.put(`http://localhost:2000/user/update/${authenticateUser.uid}`, {
-        userid: authenticateUser.uid,
-        email: email,
-        first_name: first_name,
-        last_name: last_name,
-        phoneno: phoneno,
-        country: country,
-        street_address: street_address,
-        city: city,
-        postal_code: postal_code,
-        region: region,
-        // image:selectedFile
-      });
-      // console.log("Post", response);
-      setUserData(response.data)
+      const response = await axios.put(
+        `http://localhost:2000/user/update/${authenticateUser.uid}`,
+        {
+          userid: authenticateUser.uid,
+          email: email,
+          first_name: first_name,
+          last_name: last_name,
+          phoneno: phoneno,
+          country: country,
+          street_address: street_address,
+          city: city,
+          postal_code: postal_code,
+          region: region,
+          image: photo,
+        }
+      );
+      console.log("Post", response);
+      setUserData(response.data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:2000/user/id/${authenticateUser.uid}`);
+        const response = await axios.get(
+          `http://localhost:2000/user/id/${authenticateUser.uid}`
+        );
         setUserData(response.data);
-        // console.log(response)
+        console.log(response)
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       }
     };
-    fetchUserData(); 
+    fetchUserData();
   }, [authenticateUser.uid]);
 
   const handleedit = () => {
-    setUserData(null)
-  }
-  if(authenticateUser.length===0){
-  setUserData(null)
-  console.log(authenticateUser.length)
+    setUserData(null);
+  };
+  if (authenticateUser.length === 0) {
+    setUserData(null);
+    console.log(authenticateUser.length);
   }
   return (
-    <section >
+    <section>
       <Navbar darkTheme={true} />
       <h1 className="text-center text-primary mt-9 ">Profile</h1>
       <p className="mt-1 text-sm leading-6 text-gray-600 text-center text-primary">
         This information will be only displayed to you.
       </p>
 
-
-      <div className='wrapper'>
-        <form className='text-primary' onSubmit={handlesubmit}>
-         
-            <div className="infocontainer">
-              {/* photo */}
-              <div className="info-photo">
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="col-span-full ">
-                    <label
-                      htmlFor="photo"
-                      className="block text-sm font-medium leading-6 text-gray-900 mb-5 text-center"
-                    >
-                      Photo
-                    </label>
-                    <div className="text-center photo-inside">
-                      <img
-                        src={
-                          selectedFile
-                            ? URL.createObjectURL(selectedFile)
-                            : upload
-                        }
-                        alt=""
-                        required
-                        onChange={onchange}
-                        className={`${selectedFile ? "photo-slot" : ""}`}
-                      />
-                      <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                        <label
-                          htmlFor="file-upload"
-                          className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                        >
-                          <input
-                            id="file-upload"
-                            name="file-upload"
-                            type="file"
-                            className="sr-only"
-                            onChange={handleFileChange}
-                          />
-                        </label>
-                      </div>
-                      {!selectedFile ? (
-                        <>
-                          <p className="pl-3">
-                            <span>Upload a file </span>
-                          </p>
-                          <p className="text-xs leading-5 text-gray-600">
-                            PNG, JPG, GIF up to 10MB
-                          </p>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-
-                    <div className="mt-2 flex items-center gap-x-3 justify-center">
-                      <button
-                        type="button"
-                        className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mt-5"
-                        onClick={() => {
-                          document.getElementById("file-upload").click();
-                        }}
+      <div className="wrapper">
+        <form className="text-primary" onSubmit={handlesubmit}>
+          <div className="infocontainer">
+            {/* photo */}
+            <div className="info-photo">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="col-span-full ">
+                  <label
+                    htmlFor="photo"
+                    className="block text-sm font-medium leading-6 text-gray-900 mb-5 text-center"
+                  >
+                    Photo
+                  </label>
+                  <div className="text-center photo-inside">
+                    <img
+                      src={userData.image ? userData.image : upload}
+                      alt=""
+                      required
+                      onChange={onchange}
+                      className={`${selectedFile ? "photo-slot" : ""}`}
+                    />
+                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                      <label
+                        htmlFor="file-upload"
+                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                       >
-                        Change
-                      </button>
+                        <input
+                          id="file-upload"
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                          onChange={handleFileChange}
+                        />
+                      </label>
                     </div>
+                    {!selectedFile ? (
+                      <>
+                        <p className="pl-3">
+                          <span>Upload a file </span>
+                        </p>
+                        <p className="text-xs leading-5 text-gray-600">
+                          PNG, JPG, GIF up to 10MB
+                        </p>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+
+                  <div className="mt-2 flex items-center gap-x-3 justify-center">
+                    <button
+                      type="button"
+                      className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 mt-5"
+                      onClick={() => {
+                        document.getElementById("file-upload").click();
+                      }}
+                    >
+                      Change
+                    </button>
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* personal information */}
-              {userData === null && 
-                (<div className="info-photo-text">
+            {/* personal information */}
+            {userData === null && (
+              <div className="info-photo-text">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
                     Personal Information
@@ -396,20 +401,30 @@ export const UserPortal = () => {
                   </div>
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6  ">
-                  <button type='submit' id='clear' className='className="text-sm font-semibold leading-6 mr-4'>
+                  <button
+                    type="submit"
+                    id="clear"
+                    className='className="text-sm font-semibold leading-6 mr-4'
+                  >
                     Clear
-
                   </button>
-               <button type='submit' id='save' className='className="text-sm font-semibold leading-6 mr-0 button-primary'>
+                  <button
+                    type="submit"
+                    id="save"
+                    className='className="text-sm font-semibold leading-6 mr-0 button-primary'
+                  >
                     Save
                   </button>
                 </div>
-              </div>)}
+              </div>
+            )}
 
-            {userData !== null && 
-              (<div className="info-card-text">
+            {userData !== null && (
+              <div className="info-card-text">
                 <div className="border-b border-gray-900/10 pb-12 ">
-                  <h2 className="text-base font-semibold leading-7 text-gray-900 ml-7">Personal Information </h2>
+                  <h2 className="text-base font-semibold leading-7 text-gray-900 ml-7">
+                    Personal Information{" "}
+                  </h2>
                   <div className="mt-10 grid grid-cols-1 gap-x-0.5 gap-y-5 sm:grid-cols-2 ">
                     <div className="info-card">
                       <span className="info-label">First Name :</span>
@@ -444,17 +459,20 @@ export const UserPortal = () => {
                       <span className="info-value">{userData.postal_code}</span>
                     </div>
                   </div>
-                    <div className="info-card street ">
-                      <span className="info-label">Street Address :</span>
-                      <p className="info-value">{userData.street_address}</p>
-                    </div>
+                  <div className="info-card street ">
+                    <span className="info-label">Street Address :</span>
+                    <p className="info-value">{userData.street_address}</p>
+                  </div>
                 </div>
-              <button className='button-primary' onClick={handleedit}>edit</button>
-              </div>)}
-            </div>
+                <button className="button-primary" onClick={handleedit}>
+                  edit
+                </button>
+              </div>
+            )}
+          </div>
         </form>
       </div>
-      <Footer/>
+      <Footer />
     </section>
-  )
-}
+  );
+};
