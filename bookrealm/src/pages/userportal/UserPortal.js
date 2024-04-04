@@ -47,7 +47,6 @@ export const UserPortal = () => {
   };
   //personal info on change
   const onchange = (e) => {
-
     setpersonalcred(prevState => ({
       ...prevState,
       [e.target.name]: e.target.value
