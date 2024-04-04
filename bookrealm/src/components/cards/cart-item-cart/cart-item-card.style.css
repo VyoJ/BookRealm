@@ -12,7 +12,8 @@
 
 .cart-item-content-container{
     padding-left: 3rem;
-    padding-top: 10px;
+    padding-top: 1px;
+
 }
 
 .cart-item-content-container h2{
@@ -28,8 +29,8 @@
     color: #EFC64D;
 }
 
-.delete_btn{
-    background-color: #EFC64D;
+.delete_button{
+    background-color: #2D0B09;
     color: #fff;
     padding: 10px;
     border-radius: 5px;
@@ -39,9 +40,10 @@
     border: none;
 }
 
-.delete_btn:hover{
+.delete_button:hover{
     background-color:white;
-    color: #2D0B09;
+    color: #EFC64D;
     font-weight: bold;
-    border: none;
+    border: 1px solid #2D0B09;
+    box-shadow: 1px 1px 2px #2d0b09;
 }

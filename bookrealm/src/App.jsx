@@ -1,21 +1,20 @@
-import React, { useEffect, createContext, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import fire from "./firebase/Firebase.js";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import HomePage from "./pages/homepage/homepage.js";
-import BooksPage from "./pages/bookspage/BooksPage.js";
-import BookDetailsPage from "./pages/bookdetailspage/BookDetails.js";
-import { Signup } from "./pages/signuppage/signup.js";
-import { Login } from "./pages/loginnpage/login.js";
-import CartPage from "./pages/cartpage/Cartpage.js";
+import React, { createContext, useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import ScrollToTop from "./components/util/ScrollToTop.js";
-import SearchPage from "./pages/searchpage/SearchPage.js";
-import BookUpload from "./pages/bookuploadpage/bookUpload.js";
-import { UserPortal } from "./pages/userportal/UserPortal.js";
+import fire from "./firebase/Firebase.js";
 import BookApprovalpage from "./pages/admin/admin.js";
+import BookDetailsPage from "./pages/bookdetailspage/BookDetails.js";
 import BookSendpage from "./pages/bookfunctions/booksendpage.js";
+import BooksPage from "./pages/bookspage/BooksPage.js";
+import BookUpload from "./pages/bookuploadpage/bookUpload.js";
+import CartPage from "./pages/cartpage/Cartpage.js";
+import HomePage from "./pages/homepage/homepage.js";
+import { Login } from "./pages/loginnpage/login.js";
+import SearchPage from "./pages/searchpage/SearchPage.js";
+import { Signup } from "./pages/signuppage/signup.js";
+import { UserPortal } from "./pages/userportal/UserPortal.js";
 // import { Portalstate } from "./pages/userportal/context/Portalstate.js";
-import MyBooks from "./pages/mybooks/mybooks.js";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
@@ -63,9 +62,9 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/bookupload" element={<BookUpload />} />
             <Route path="/user" element={<UserPortal />} />
-            <Route path="/admin" element={<BookApprovalpage />} />
-            <Route path="/list" element={<BookSendpage />} />
-            <Route path="/mybooks" element={<MyBooks />} />
+            <Route path="/admin" element={<BookApprovalpage/>} />
+            <Route path="/list" element={<BookSendpage/>} />
+            <Route path="/mybooks"  />
           </Routes>
         </cartContext.Provider>
         {/* </Portalstate> */}
