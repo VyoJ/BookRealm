@@ -6,6 +6,7 @@ const userRoutes = require("./routes/userRoutes");
 const bookRoutes = require("./routes/bookRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const txnRoutes = require("./routes/txnRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 const app = express();
 const PORT = 2000;
@@ -27,5 +28,6 @@ app.use(cors());
 app.use("/user", userRoutes);
 app.use("/book", bookRoutes);
 app.use("/admin", adminRoutes);
-app.use("/transaction", adminRoutes);
+app.use("/transaction", txnRoutes);
+app.use("/cart", cartRoutes);
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

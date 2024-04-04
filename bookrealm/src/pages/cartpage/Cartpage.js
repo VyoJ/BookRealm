@@ -8,9 +8,7 @@ const CartPage = () => {
   return (
     <section>
       <Navbar darkTheme={true} />
-
       <CartItemContainer />
-
       <Footer />
     </section>
   );

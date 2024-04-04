@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Navbar from "../../components/layouts/navbar/Navbar";
 
 const MyBooks = () => {
   const [transactions, setTransactions] = useState([]);
@@ -12,7 +13,10 @@ const MyBooks = () => {
         const response = await axios.get(
           `http:localhost:2000/transaction/${userId}`
         );
-        setTransactions(response.data);
+        setTransactions(Array.isArray(response.data) ? response.data : []);
+        // setTransactions(response.data);
+        console.log("Response: ", response);
+        console.log("Txn", transactions);
       } catch (error) {
         console.error("Error fetching transactions:", error);
       } finally {
@@ -25,18 +29,21 @@ const MyBooks = () => {
 
   return (
     <div>
+      <Navbar darkTheme={true} />
       {loading ? (
         <div>Loading your books...</div>
       ) : (
         <div>
           <h2>Your Books</h2>
-          <ul>
-            {transactions.map((transaction, index) => (
-              <li key={index}>
-                {transaction.description} - {transaction.amount}
-              </li>
-            ))}
-          </ul>
+          {transactions.length != 0 && (
+            <ul>
+              {transactions.map((transaction, index) => (
+                <li key={index}>
+                  {transaction.description} - {transaction.amount}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
     </div>
