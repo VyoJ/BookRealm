@@ -1,13 +1,13 @@
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react'
+import { userContext } from '../../App'
 import { Link } from "react-router-dom";
-import { userContext } from '../../App';
-import Navbar from '../../components/layouts/navbar/Navbar';
-import './UserPortal.css';
+import Navbar from '../../components/layouts/navbar/Navbar'
+import './UserPortal.css'
 // import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import axios from 'axios';
-import Footer from '../../components/layouts/footer/footer';
-import upload from './upload-pic.png';
+import upload from './upload-pic.png'
+import axios from 'axios'
+import Footer from '../../components/layouts/footer/footer'
 
 export const UserPortal = () => {
 

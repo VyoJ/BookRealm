@@ -12,7 +12,9 @@ const ProductListingCard = ({ bookData }) => {
   const user = useContext(userContext)
   const { cartItem, setcartItem } = useContext(cartContext)
   const [showDropdown, setshowDropdown] = useState(false)
-  const [options, setoptions] = useState([{quantity:1,hr:1}])
+  const [options, setoptions] = useState({quantity:1,hr:1})
+ console.log(options)
+ console.log(options.quantity)
 
   const handelclick = () => {
     navigate(`/book-details/${bookData._id}`)
@@ -43,11 +45,12 @@ const ProductListingCard = ({ bookData }) => {
   const toggleDropdown = () => {
     setshowDropdown(!showDropdown)
   }
-  const handeloptions = (option,operation) => {
+  const handeloptions = (name,operation) => {
     setoptions((prev) => {
+      console.log(options)
       return{
         ...prev,
-        hoptions:operation==='i' ? options[name]+1 : options[name] -1,
+        [name]:operation==='i' ? options[name]+1 : options[name] -1,
       }
     } )
   }
@@ -79,9 +82,9 @@ const ProductListingCard = ({ bookData }) => {
             <button className="dropdown-menu-buy" onClick={handelBuyClick}>Buy
             </button>
             <div className="optioncounter">
-                            <button className="optioncounterbuttonn" disabled={options.quantity<=1} onClick={() => handeloptions('hr','d')}>-</button>
+                            <button className="optioncounterbuttonn" disabled={options.quantity<=1} onClick={() => handeloptions('quantity','d')}>-</button>
                             <p className="optioncounterbutton text-secondary" >{options.quantity}</p>
-                            <button className="optioncounterbuttonn" onClick={() => handeloptions('hr','i')}>+</button>
+                            <button className="optioncounterbuttonn" onClick={() => handeloptions('quantity','i')}>+</button>
                         </div>
             </div>
 
@@ -105,5 +108,3 @@ const ProductListingCard = ({ bookData }) => {
 };
 
 export default ProductListingCard;
-
-

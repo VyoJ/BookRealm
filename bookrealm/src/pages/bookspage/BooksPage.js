@@ -17,7 +17,6 @@ const BooksPage = () => {
         <SearchInputForm darkTheme={false} />
       </div>
       <div className="searchblock"></div>
-
       <ProductListingAll />
       <Footer />
     </section>

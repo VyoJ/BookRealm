@@ -37,7 +37,6 @@ router.post("/buy", async (req, res) => {
       amount: req.body.price,
       date: new Date(),
     });
-
     const savedTxn = await newTxn.save();
     return res.status(201).send(savedTxn);
   } catch (error) {
@@ -55,7 +54,6 @@ router.post("/rent", async (req, res) => {
       amount: req.body.price,
       date: new Date(),
     });
-
     const savedTxn = await newTxn.save();
     return res.status(201).send(savedTxn);
   } catch (error) {
@@ -63,5 +61,7 @@ router.post("/rent", async (req, res) => {
     return res.status(500).send("Error creating transaction");
   }
 });
+
+
 
 module.exports = router;
