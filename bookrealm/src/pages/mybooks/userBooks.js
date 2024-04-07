@@ -7,7 +7,7 @@ const UserBooksGrid = ({ userId }) => {
   useEffect(() => {
     const fetchUserBooks = async () => {
       try {
-        const response = await axios.get(`http://localhost:2000/book/cart/${userId}`);
+        const response = await axios.get(`http://localhost:2000/cart/${userId}`);
         const cartItems = response.data;
         const booksPromises = cartItems.map(async item => {
           const bookResponse = await axios.get(`http://localhost:2000/books/${item.bookid}`);
