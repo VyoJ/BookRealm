@@ -15,6 +15,11 @@ const CartItemCard = ({ bookdata }) => {
     // console.log(bookdata);
     setcartItem(cartItem.filter((item) => item._id !== bookdata._id));
   };
+  // const price = order_type === 'Buy' ? bookdata.price*options.quantity : bookdata.price*options.hr/20
+  const getprice = () => {
+    return order_type === 'Buy' ? bookdata.price*options.quantity : bookdata.price*options.hr/20
+  }
+  <cartContext.Provider value={{ cartItem, totalAmount, setcartItem, price }}></cartContext.Provider>
 
   return (
     <section className="cart-item">
@@ -28,16 +33,19 @@ const CartItemCard = ({ bookdata }) => {
       <div className="cart-item-content-container">
         <h2 className="text-primary"><b>{bookdata.title}</b></h2>
         <p>{bookdata.authors}</p>
-        <p>Quantity : {options.quantity}</p>
         <p>Order-Type : {order_type}</p>
-        <h3 className="cart-item-price">&#8377;{bookdata.price}</h3>
+       {order_type === 'Buy' ?
+       <p>Quantity : {options.quantity}</p> : 
+       <p>Hours : {options.hr}</p>
+      }
+        <h3 className="cart-item-price"><b>&#8377;{getprice() }</b></h3>
         
         <button onClick={handleRemove} className="delete_button">
           Remove from Cart
         </button>
       </div>
     </section>
-  );v
+  );
 };
 
 export default CartItemCard;

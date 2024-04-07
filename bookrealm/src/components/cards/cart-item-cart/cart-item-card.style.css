@@ -5,30 +5,23 @@
     border: 1px solid #555;
     border-radius: 1rem;
 }
-
 .cart-item-img{
     width: 6rem
 }
-
 .cart-item-content-container{
     padding-left: 3rem;
     padding-top: 1px;
-
 }
-
 .cart-item-content-container h2{
-    margin-left:0px;
+    margin-left:10px;
 }
-
 .cart-item-content-container p{
-    padding-top: 4px;
+    padding-top: 1px;
 }
-
 .cart-item-price{
     padding-top: 20px;
     color: #EFC64D;
 }
-
 .delete_button{
     background-color: #2D0B09;
     color: #fff;
@@ -39,7 +32,6 @@
     transition: 0.3s ease;
     border: none;
 }
-
 .delete_button:hover{
     background-color:white;
     color: #EFC64D;

@@ -1,13 +1,13 @@
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react'
+import { userContext } from '../../App'
 import { Link } from "react-router-dom";
-import { userContext } from '../../App';
-import Navbar from '../../components/layouts/navbar/Navbar';
-import './UserPortal.css';
+import Navbar from '../../components/layouts/navbar/Navbar'
+import './UserPortal.css'
 // import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import axios from 'axios';
-import Footer from '../../components/layouts/footer/footer';
-import upload from './upload-pic.png';
+import upload from './upload-pic.png'
+import axios from 'axios'
+import Footer from '../../components/layouts/footer/footer'
 
 export const UserPortal = () => {
 
@@ -23,8 +23,8 @@ export const UserPortal = () => {
     city: "",
     region: "",
     postal_code: "",
-    photo: "",
   });
+  // const [photo, setphoto] = useState(null)
   const [userData, setUserData] = useState(null);
 
   //photo on change
@@ -49,8 +49,8 @@ export const UserPortal = () => {
   const onchange = (e) => {
     setpersonalcred(prevState => ({
       ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+      [e.target.name]: e.target.value
+    }))
     // console.log(personalcred)
   }
   // const imageData = localStorage.getItem('selectedFile');
@@ -69,48 +69,38 @@ export const UserPortal = () => {
       city,
       postal_code,
       region,
-      photo,
     } = personalcred;
-    console.log(personalcred);
     alert("your personal information has been saved");
     try {
-      const response = await axios.put(
-        `http://localhost:2000/user/update/${authenticateUser.uid}`,
-        {
-          userid: authenticateUser.uid,
-          email: email,
-          first_name: first_name,
-          last_name: last_name,
-          phoneno: phoneno,
-          country: country,
-          street_address: street_address,
-          city: city,
-          postal_code: postal_code,
-          region: region,
-          image: photo,
-        }
-      );
-      console.log("Post", response);
-      setUserData(response.data);
+
+      const response = await axios.put(`http://localhost:2000/user/update/${authenticateUser.uid}`, {
+        userid: authenticateUser.uid,
+        email: email,
+        first_name: first_name,
+        last_name: last_name,
+        phoneno: phoneno,
+        country: country,
+        street_address: street_address,
+        city: city,
+        postal_code: postal_code,
+        region: region,
+        // image:selectedFile
+      });
+      // console.log("Post", response);
+      setUserData(response.data)
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:2000/user/id/${authenticateUser.uid}`
-        );
+        const response = await axios.get(`http://localhost:2000/user/id/${authenticateUser.uid}`);
         setUserData(response.data);
-        if (response.data.image) {
-          setSelectedFile(response.data.image);
-          localStorage.setItem("selectedFile", selectedFile);
-        }
-        console.log(response);
+        // console.log(response)
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error('Error fetching user data:', error);
       }
     };
     fetchUserData();
@@ -124,7 +114,7 @@ export const UserPortal = () => {
   // console.log(authenticateUser.length)
   // }
   return (
-    <section>
+    <section >
       <Navbar darkTheme={true} />
       <h1 className="text-center text-primary mt-9 ">Profile</h1>
       <p className="mt-1 text-sm leading-6 text-gray-600 text-center text-primary">
@@ -212,175 +202,175 @@ export const UserPortal = () => {
                     Use a permanent address where you can receive mail.
                   </p>
 
-                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                      <div className="sm:col-span-3">
-                        <label
-                          htmlFor="first_name"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          First name
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="first_name"
-                            id="first_name"
-                            onChange={onchange}
-                            required
-                            autoComplete="given-name"
-                            className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
+                  <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="first_name"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        First name
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="text"
+                          name="first_name"
+                          id="first_name"
+                          onChange={onchange}
+                          required
+                          autoComplete="given-name"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
                       </div>
+                    </div>
 
-                      <div className="sm:col-span-3">
-                        <label
-                          htmlFor="last_name"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Last name
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="last_name"
-                            id="last_name"
-                            onChange={onchange}
-                            autoComplete="family-name"
-                            className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="last_name"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Last name
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="text"
+                          name="last_name"
+                          id="last_name"
+                          onChange={onchange}
+                          autoComplete="family-name"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
                       </div>
+                    </div>
 
-                      <div className="sm:col-span-4">
-                        <label
-                          htmlFor="email"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Email address
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            // onChange={onchange}
-                            // placeholder={authenticateUser.email}
-                            value={authenticateUser.email}
-                            readOnly={true}
-                            autoComplete="email"
-                            className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
+                    <div className="sm:col-span-4">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Email address
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="email"
+                          name="email"
+                          type="email"
+                          // onChange={onchange}
+                          // placeholder={authenticateUser.email}
+                          value={authenticateUser.email}
+                          readOnly={true}
+                          autoComplete="email"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
                       </div>
+                    </div>
 
-                      <div className="sm:col-span-4">
-                        <label
-                          htmlFor="email"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          phone no.
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            id="phoneno"
-                            name="phoneno"
-                            onChange={onchange}
-                            required
-                            pattern="[0-9]*"
-                            minLength={10}
-                            maxLength={10}
-                            type="tel"
-                            autoComplete="tel"
-                            className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
+                    <div className="sm:col-span-4">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        phone no.
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          id="phoneno"
+                          name="phoneno"
+                          onChange={onchange}
+                          required
+                          pattern="[0-9]*"
+                          minLength={10}
+                          maxLength={10}
+                          type="tel"
+                          autoComplete="tel"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
                       </div>
+                    </div>
 
-                      <div className="sm:col-span-3">
-                        <label
-                          htmlFor="country"
-                          className="block text-sm font-medium leading-6 text-gray-900"
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="country"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Country
+                      </label>
+                      <div className="mt-2">
+                        <select
+                          id="country"
+                          name="country"
+                          onChange={onchange}
+                          required
+                          autoComplete="country-name"
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                         >
-                          Country
-                        </label>
-                        <div className="mt-2">
-                          <select
-                            id="country"
-                            name="country"
-                            onChange={onchange}
-                            required
-                            autoComplete="country-name"
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                          >
-                            <option>select</option>
-                            <option>India</option>
-                            <option>Canada</option>
-                            <option>United States</option>
-                            <option>Mexico</option>
-                          </select>
-                        </div>
+                          <option>select</option>
+                          <option>India</option>
+                          <option>Canada</option>
+                          <option>United States</option>
+                          <option>Mexico</option>
+                        </select>
                       </div>
+                    </div>
 
-                      <div className="col-span-full">
-                        <label
-                          htmlFor="street_address"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Street address
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="street_address"
-                            id="street_address"
-                            onChange={onchange}
-                            required
-                            autoComplete="street_address"
-                            className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
+                    <div className="col-span-full">
+                      <label
+                        htmlFor="street_address"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Street address
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="text"
+                          name="street_address"
+                          id="street_address"
+                          onChange={onchange}
+                          required
+                          autoComplete="street_address"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
                       </div>
+                    </div>
 
-                      <div className="sm:col-span-2 sm:col-start-1">
-                        <label
-                          htmlFor="city"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          City
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="city"
-                            id="city"
-                            onChange={onchange}
-                            required
-                            autoComplete="address-level2"
-                            className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
+                    <div className="sm:col-span-2 sm:col-start-1">
+                      <label
+                        htmlFor="city"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        City
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="text"
+                          name="city"
+                          id="city"
+                          onChange={onchange}
+                          required
+                          autoComplete="address-level2"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
                       </div>
+                    </div>
 
-                      <div className="sm:col-span-2">
-                        <label
-                          htmlFor="region"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          State / Province
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="region"
-                            id="region"
-                            onChange={onchange}
-                            required
-                            autoComplete="address-level1"
-                            className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                        </div>
+                    <div className="sm:col-span-2">
+                      <label
+                        htmlFor="region"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        State / Province
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="text"
+                          name="region"
+                          id="region"
+                          onChange={onchange}
+                          required
+                          autoComplete="address-level1"
+                          className="text-secondary block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
                       </div>
+                    </div>
 
                     <div className="sm:col-span-2">
                       <label
@@ -410,7 +400,7 @@ export const UserPortal = () => {
                     Save
                   </button>
                 </div>
-              )}
+              </div>)}
 
             {userData !== null &&
               (<div className="info-card-text">
@@ -491,5 +481,5 @@ export const UserPortal = () => {
       </div>
       <Footer />
     </section>
-  );
-};
+  )
+}
