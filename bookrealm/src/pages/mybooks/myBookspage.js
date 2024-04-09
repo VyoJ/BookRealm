@@ -5,9 +5,11 @@ import UserBooksGrid from "./userBooks";
 
 const MyBookspage = () => {
   return (
-    <section className="myBookspage">
+    <section className="MyBookspage">
       <Navbar darkTheme={true} />
-      <UserBooksGrid userId={"GX3XgcMe7ydweDlg3sixXWx2YEm2"}/>
+
+      <UserBooksGrid userId="GX3XgcMe7ydweDlg3sixXWx2YEm2"/>
+
       <Footer />
     </section>
   );
