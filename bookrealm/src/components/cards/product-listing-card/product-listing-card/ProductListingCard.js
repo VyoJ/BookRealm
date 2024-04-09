@@ -13,8 +13,8 @@ const ProductListingCard = ({ bookData }) => {
   const { cartItem, setcartItem } = useContext(cartContext)
   const [showDropdown, setshowDropdown] = useState(false)
   const [options, setoptions] = useState({quantity:1,hr:1})
- console.log(options)
- console.log(options.quantity)
+//  console.log(options)
+//  console.log(options.quantity)
 
   const handelclick = () => {
     navigate(`/book-details/${bookData._id}`)
