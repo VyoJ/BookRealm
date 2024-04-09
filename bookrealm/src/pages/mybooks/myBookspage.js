@@ -3,14 +3,14 @@ import Footer from "../../components/layouts/footer/footer";
 import Navbar from "../../components/layouts/navbar/Navbar";
 import UserBooksGrid from "./userBooks";
 
-const myBookspage = () => {
+const MyBookspage = () => {
   return (
     <section className="myBookspage">
       <Navbar darkTheme={true} />
-      <UserBooksGrid userId={userId}/>
+      <UserBooksGrid userId={"GX3XgcMe7ydweDlg3sixXWx2YEm2"}/>
       <Footer />
     </section>
   );
 };
 
-export default myBookspage;
+export default MyBookspage;

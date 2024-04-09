@@ -5,21 +5,20 @@ import { useLocation } from "react-router-dom";
 
 const CartItemCard = ({ bookdata }) => {
   const location = useLocation()
-  console.log(location)
+  // console.log(location)
   const { cartItem, setcartItem } = useContext(cartContext);
-  const [options,setoptions] = useState(location.state.options)
-  const  order_type = location.state.type
-  console.log(order_type)
+  const [options,setoptions] = useState(location.state ? location.state.options : {})
+  const  order_type = location.state ? location.state.type : ''
+  // console.log(order_type)
   // console.log(bookdata);
   const handleRemove = () => {
     // console.log(bookdata);
     setcartItem(cartItem.filter((item) => item._id !== bookdata._id));
   };
-  // const price = order_type === 'Buy' ? bookdata.price*options.quantity : bookdata.price*options.hr/20
-  const getprice = () => {
-    return order_type === 'Buy' ? bookdata.price*options.quantity : bookdata.price*options.hr/20
-  }
-  <cartContext.Provider value={{ cartItem, totalAmount, setcartItem, price }}></cartContext.Provider>
+  const price = order_type === 'Buy' ? bookdata.price*options.quantity : bookdata.price*options.hr/20
+  // const getprice = () => {
+  //   return order_type === 'Buy' ? bookdata.price*options.quantity : bookdata.price*options.hr/20
+  // }
 
   return (
     <section className="cart-item">
@@ -38,7 +37,7 @@ const CartItemCard = ({ bookdata }) => {
        <p>Quantity : {options.quantity}</p> : 
        <p>Hours : {options.hr}</p>
       }
-        <h3 className="cart-item-price"><b>&#8377;{getprice() }</b></h3>
+        <h3 className="cart-item-price"><b>&#8377;{price }</b></h3>
         
         <button onClick={handleRemove} className="delete_button">
           Remove from Cart

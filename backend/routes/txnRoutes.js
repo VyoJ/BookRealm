@@ -62,6 +62,4 @@ router.post("/rent", async (req, res) => {
   }
 });
 
-
-
 module.exports = router;
