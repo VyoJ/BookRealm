@@ -1,16 +1,16 @@
 import React, { useContext, useState } from "react";
 import "./productListingCard.styles.css";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { userContext, cartContext } from "../../../../App";
-import axios from "axios";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CartBackendContext from "../../../../pages/context/CartBackendContext";
 
 const ProductListingCard = ({ bookData }) => {
   const navigate = useNavigate()
   const user = useContext(userContext)
   const { cartItem, setcartItem } = useContext(cartContext)
+  const {addCartItem,} = useContext(CartBackendContext)
   const [showDropdown, setshowDropdown] = useState(false)
   const [options, setoptions] = useState({quantity:1,hr:1})
 //  console.log(options)
@@ -20,23 +20,26 @@ const ProductListingCard = ({ bookData }) => {
     navigate(`/book-details/${bookData._id}`)
     //  navigate('books')
   }
-  const handelBuyClick = () => {
+  const handelBuyClick = async() => {
     if (user) {
       const type='Buy'
       setcartItem([...cartItem, bookData])
-      alert(`The book ${bookData.title} is added ot the cart`);
-      navigate('/cart',{state:{options,type}})
+      await addCartItem(bookData._id, bookData.type, bookData.price*options.quantity, options.quantity,bookData.image,bookData.authors,bookData.title,type);
+      alert(`The book ${bookData.title} is added to the cart`);
+      // navigate('/cart',{state:{options,type}})
     } else {
       navigate("/login");
       alert("Please login in to your account to proceed");
     }
   }
-  const handelRentClick = () => {
+
+  const handelRentClick = async() => {
     if (user) {
       const type="Rent"
       setcartItem([...cartItem, bookData])
-      alert(`The book ${bookData.title} is added ot the cart`);
-      navigate('/cart',{state:{options,type}})
+      await addCartItem(bookData._id, bookData.type, bookData.price*options.hr/30, options.hr,bookData.image,bookData.authors,bookData.title,type);
+      alert(`The book ${bookData.title} is added to the cart`);
+      // navigate('/cart',{state:{options,type}})
     } else {
       navigate("/login");
       alert("Please login in to your account to proceed");

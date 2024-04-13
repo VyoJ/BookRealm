@@ -77,9 +77,17 @@ export const DetailsSection = () => {
               {bookdata.book_length}
             </p>
             <h3> &#8377;{bookdata.price}</h3>
+            <div className="add-to-cart-part">
+              <div className="add-to-cart-buy">
+
             <a onClick={handelAddClick} className="button-primary">
               Add to cart
             </a>
+              </div>
+              <div className="add-to-cart-rent">
+
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ const userRoutes = require("./routes/userRoutes");
 const bookRoutes = require("./routes/bookRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const txnRoutes = require("./routes/txnRoutes");
-const cartRoutes = require("./routes/cartRoutes");
+const cartRoutes = require("./routes/cartRoutes")
 
 const app = express();
 const PORT = 2000;
@@ -24,7 +24,6 @@ connectToDb();
 app.use(express.json());
 express.json();
 app.use(cors());
-
 app.use("/user", userRoutes);
 app.use("/book", bookRoutes);
 app.use("/admin", adminRoutes);
