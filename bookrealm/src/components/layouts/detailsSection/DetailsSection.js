@@ -3,12 +3,17 @@ import "./detailssection.style.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { userContext, cartContext } from "../../../App";
 import axios from "axios";
+import CartBackendContext from "../../../pages/context/CartBackendContext";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const DetailsSection = () => {
   const { id } = useParams(); //console.log(id)
   const [bookdata, setbookdata] = useState([]);
   const user = useContext(userContext);
   const { cartItem, setcartItem } = useContext(cartContext);
+  const [options, setoptions] = useState({ quantity: 1, hr: 1 });
+  const { addCartItem, } = useContext(CartBackendContext)
 
   const navigate = useNavigate();
 
@@ -21,8 +26,8 @@ export const DetailsSection = () => {
     //   const handleAddToCart = () => {
     //     if(user) {
     //         //add to cart
-    //         setCartItems([...cartItems, bookData]);
-    //         alert(`The book ${bookData.book_name} is added to the cart`);
+    //         setCartItems([...cartItems, bookdata]);
+    //         alert(`The book ${bookdata.book_name} is added to the cart`);
     //     } else {
     //         navigate('/login');
     //         alert("Please Login or Sign up first..");
@@ -44,18 +49,53 @@ export const DetailsSection = () => {
     fetchBooks();
   }, [id]);
 
-  const handelAddClick = () => {
-    // console.log("from handeladdclick",user)
+  // const handelAddClick = () => {
+  //   // console.log("from handeladdclick",user)
+  //   if (user) {
+  //     setcartItem([...cartItem, bookdata]);
+  //     console.log("items in cart are", cartItem);
+  //     alert(`The book ${bookdata.title} is added ot the cart`);
+  //     navigate(`/book-details/${bookdata._id}`);
+  //   } else {
+  //     navigate("/login");
+  //     alert("Please login in to your account to proceed");
+  //   }
+  // };
+  const handelBuyClick = async () => {
     if (user) {
-      setcartItem([...cartItem, bookdata]);
-      console.log("items in cart are", cartItem);
-      alert(`The book ${bookdata.title} is added ot the cart`);
-      navigate(`/book-details/${bookdata._id}`);
+      const type = 'Buy'
+      setcartItem([...cartItem, bookdata])
+      await addCartItem(bookdata._id, bookdata.type, bookdata.price * options.quantity, options.quantity, bookdata.image, bookdata.authors, bookdata.title, type);
+      alert(`The book ${bookdata.title} is added to the cart`);
+      // navigate('/cart',{state:{options,type}})
     } else {
       navigate("/login");
       alert("Please login in to your account to proceed");
     }
-  };
+  }
+
+  const handelRentClick = async () => {
+    if (user) {
+      const type = "Rent"
+      setcartItem([...cartItem, bookdata])
+      await addCartItem(bookdata._id, bookdata.type, bookdata.price * options.hr / 30, options.hr, bookdata.image, bookdata.authors, bookdata.title, type);
+      alert(`The book ${bookdata.title} is added to the cart`);
+      // navigate('/cart',{state:{options,type}})
+    } else {
+      navigate("/login");
+      alert("Please login in to your account to proceed");
+    }
+  }
+
+  const handeloptions = (name, operation) => {
+    setoptions((prev) => {
+      console.log(options)
+      return {
+        ...prev,
+        [name]: operation === 'i' ? options[name] + 1 : options[name] - 1,
+      }
+    })
+  }
 
   return (
     <section className="deatil-section-container">
@@ -65,9 +105,13 @@ export const DetailsSection = () => {
             <img src={bookdata.image} alt="book" className="bookimg" />
           </div>
           <div className="book-detail-container">
-            <h2  className="text-primary"><b>{bookdata.title}</b></h2>
+            <h2 className="text-primary"><b>{bookdata.title}</b></h2>
             <p className="text-primary">{bookdata.authors}</p>
             <p className="book-description">{bookdata.subtitle}</p>
+            <p>
+              <b>Book-Type : </b>
+              {bookdata.type}
+            </p>
             <p>
               <b>Language : </b>
               {bookdata.language}
@@ -77,17 +121,43 @@ export const DetailsSection = () => {
               {bookdata.book_length}
             </p>
             <h3> &#8377;{bookdata.price}</h3>
+
+
+<div className="add-to-cart-details-section">
+<div className="add-to-cart-details-section-text">
+
+<p><small>{bookdata.type === 'ebook'?  "Buy or Rent the book by selecting the quantity or hours of rent " : "Select the quantity of books and add to cart "}</small> </p>
+</div>
             <div className="add-to-cart-part">
+
               <div className="add-to-cart-buy">
-
-            <a onClick={handelAddClick} className="button-primary">
-              Add to cart
-            </a>
+                <div className="doptioncounter">
+                  <button className="doptioncounterbuttonn" disabled={options.quantity <= 1} onClick={() => handeloptions('quantity', 'd')}>-</button>
+                  <p className="doptioncounterbutton text-secondary" >{options.quantity}</p>
+                  <button className="doptioncounterbuttonn" onClick={() => handeloptions('quantity', 'i')}>+</button>
+                </div>
+                <button className=" button-primary" onClick={handelBuyClick}>Buy <FontAwesomeIcon icon={faCartShopping} />
+                </button>
               </div>
-              <div className="add-to-cart-rent">
 
-              </div>
+             {bookdata.type === 'ebook' ? <div className="add-to-cart-rent">
+                <div className="doptioncounter">
+                  <button className="doptioncounterbuttonn" disabled={options.hr <= 1} onClick={() => handeloptions('hr', 'd')}>-</button>
+                  <p className="doptioncounterbutton text-secondary" >{options.hr}</p>
+                  <button className="doptioncounterbuttonn" onClick={() => handeloptions('hr', 'i')}>+</button>
+                </div>
+                <button className="button-primary" onClick={handelRentClick}>Rent <FontAwesomeIcon icon={faCartShopping} />
+                </button>
+              </div> : ''}
+
             </div>
+</div>
+
+
+
+
+
+
           </div>
         </div>
       </div>
