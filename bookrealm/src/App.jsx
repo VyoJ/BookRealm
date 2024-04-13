@@ -11,6 +11,7 @@ import BookUpload from "./pages/bookuploadpage/bookUpload.js";
 import CartPage from "./pages/cartpage/Cartpage.js";
 import HomePage from "./pages/homepage/homepage.js";
 import { Login } from "./pages/loginnpage/login.js";
+import MyBookspage from "./pages/mybooks/myBookspage.js";
 import SearchPage from "./pages/searchpage/SearchPage.js";
 import { Signup } from "./pages/signuppage/signup.js";
 import { UserPortal } from "./pages/userportal/UserPortal.js";
@@ -68,7 +69,9 @@ const App = () => {
             <Route path="/user" element={<UserPortal />} />
             <Route path="/admin" element={<BookApprovalpage/>} />
             <Route path="/list" element={<BookSendpage/>} />
+
             <Route path="/mybooks" element={<MyBookspage/>} />
+
           </Routes>
         </CartState>
         </cartContext.Provider>
