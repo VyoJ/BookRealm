@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./cart-item-card.style.css";
 import { cartContext } from "../../../App";
-import { useLocation, useNavigate  } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CartBackendContext from "../../../pages/context/CartBackendContext";
 
 const CartItemCard = ({ bookdata }) => {
@@ -28,22 +28,26 @@ const CartItemCard = ({ bookdata }) => {
           src={bookdata.image}
           alt="cart-item-img"
           className="cart-item-img"
-          onClick={() =>     navigate(`/book-details/${bookdata.bookid}`)}
+          onClick={() => navigate(`/book-details/${bookdata.bookid}`)}
         />
       </div>
       <div className="cart-item-content-container">
         <h2 className="text-primary"><b>{bookdata.title}</b>,<small style={{ fontSize: "smaller" }}>{bookdata.authors}</small></h2>
-        <p>Book-Type : {bookdata.type}</p>
-        <p>Order-Type : {order_type}</p>
-        {/* <p>date : {bookdata.date}</p> */}
-        {order_type === 'Buy' ?
-          //  <p>Quantity : {options.quantity}</p>
-          //   : 
-          //  <p>Hours : {options.hr}</p>
-          <p>Quantity : {bookdata.rent_period}</p>
-          :
-          <p>Hours : {bookdata.rent_period}</p>
-        }
+
+        <div className="text-secondary">
+          <p>Book-Type : {bookdata.type}</p>
+          <p>Order-Type : {order_type}</p>
+          {/* <p>date : {bookdata.date}</p> */}
+          {order_type === 'Buy' ?
+            //  <p>Quantity : {options.quantity}</p>
+            //   : 
+            //  <p>Hours : {options.hr}</p>
+            <p>Quantity : {bookdata.rent_period}</p>
+            :
+            <p>Hours : {bookdata.rent_period}</p>
+          }
+        </div>
+
         <h3 className="cart-item-price"><b>&#8377;{bookdata.price}</b></h3>
         <div className="cart-btn-container">
           <div className="cart-btn-part">
@@ -52,7 +56,7 @@ const CartItemCard = ({ bookdata }) => {
               Remove from Cart
             </button>
           </div>
-          <div className="cart-date-part">
+          <div className="cart-date-part text-secondary" style={{ fontSize: "small" }}>
             <p>date : {bookdata.date}</p>
           </div>
         </div>

@@ -48,6 +48,7 @@ const CartState = ( props) => {
             console.error(error)
         }
     }
+    
 
     return(
         <CartBackendContext.Provider value={{getcartItem,addCartItem,deleteCartItem}}>

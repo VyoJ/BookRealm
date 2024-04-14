@@ -107,7 +107,9 @@ export const DetailsSection = () => {
           <div className="book-detail-container">
             <h2 className="text-primary"><b>{bookdata.title}</b></h2>
             <p className="text-primary">{bookdata.authors}</p>
-            <p className="book-description">{bookdata.subtitle}</p>
+            <div className="book--details-container-text text-secondary">
+
+            <p className="book-description text-secondary">{bookdata.subtitle}</p>
             <p>
               <b>Book-Type : </b>
               {bookdata.type}
@@ -120,13 +122,18 @@ export const DetailsSection = () => {
               <b>Book Length : </b>
               {bookdata.book_length}
             </p>
+            {/* <p>
+              {bookdata.url}
+            </p> */}
+            </div>
+
             <h3> &#8377;{bookdata.price}</h3>
 
 
 <div className="add-to-cart-details-section">
 <div className="add-to-cart-details-section-text">
 
-<p><small>{bookdata.type === 'ebook'?  "Buy or Rent the book by selecting the quantity or hours of rent " : "Select the quantity of books and add to cart "}</small> </p>
+<p className="text-secondary"><small>{bookdata.type === 'ebook'?  "Buy or Rent the book by selecting the quantity or hours of rent " : "Select the quantity of books and add to cart "}</small> </p>
 </div>
             <div className="add-to-cart-part">
 
