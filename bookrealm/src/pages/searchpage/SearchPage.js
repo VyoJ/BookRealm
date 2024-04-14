@@ -34,6 +34,8 @@ const SearchPage = () => {
         );
         setSearchResult(searchValue);
       } catch (error) {
+
+
         console.error("Error fetching book:", error.message);
       }
     };
@@ -46,7 +48,7 @@ const SearchPage = () => {
       <Navbar darkTheme={true} />
       <div className="search-result-container">
         <div className="container">
-          <h2>Your Search Result</h2>
+          <h2 className="text-secondary"><b>Your <span className="text-primary">Search </span></b>Result</h2>
           {searchResult.map((result) => (
             <SearchResultCard key={result.id} bookData={result} />
           ))}
