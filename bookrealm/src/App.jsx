@@ -17,6 +17,7 @@ import { Signup } from "./pages/signuppage/signup.js";
 import { UserPortal } from "./pages/userportal/UserPortal.js";
 import AdminTransactions from "./pages/admin/admintxn.js";
 // import { Portalstate } from "./pages/userportal/context/Portalstate.js";
+import CartState from "./pages/context/CartState.js";
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
@@ -26,6 +27,7 @@ const App = () => {
   const [authenticateUser, setauthenticateUser] = useState("");
   const [cartItem, setcartItem] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  // console.log(cartItem,'from app.js')
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -54,6 +56,7 @@ const App = () => {
       <userContext.Provider value={authenticateUser}>
         {/* <Portalstate> */}
         <cartContext.Provider value={{ cartItem, totalAmount, setcartItem }}>
+        <CartState>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/books" element={<BooksPage />} />
@@ -69,6 +72,7 @@ const App = () => {
             <Route path="/admin/transactions" element={<AdminTransactions />} />
             <Route path="/mybooks" element={<MyBookspage />} />
           </Routes>
+        </CartState>
         </cartContext.Provider>
         {/* </Portalstate> */}
       </userContext.Provider>

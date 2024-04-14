@@ -19,8 +19,13 @@ router.post("/add", async (req, res) => {
     const CartItem = new Cart({
       userid: req.body.userid,
       bookid: req.body.bookid,
+      title: req.body.title,
+      authors: req.body.authors,
+      image: req.body.image,
       type: req.body.type,
-      amount: req.body.price,
+      price: req.body.price,
+      order_type:req.body.order_type,
+      approved: req.body.approved || "Not Approved", // Set a default value if not provided
       date: new Date(),
       rent_period: req.body.rent_period,
     });
@@ -33,7 +38,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   try {
     const result = await Cart.deleteOne({ _id: req.params.id });
     if (result.deletedCount === 0) {
