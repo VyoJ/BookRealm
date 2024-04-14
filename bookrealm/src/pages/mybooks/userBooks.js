@@ -25,7 +25,7 @@ const UserBooksGrid = ({ userId }) => {
 
   return (
     <div>
-      <h2>User's Books</h2>
+      <h2 className='font-semibold text-primary text-center mt-4 text-3xl'>Your Books</h2>
       <div className="grid-container">
         {userBooks.map(book => (
           <div key={book._id} className="grid-item">
