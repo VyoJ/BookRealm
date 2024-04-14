@@ -55,6 +55,7 @@ const CartState = (props) => {
     } catch (error) {
       console.error(error);
     }
+
   };
 
   return (

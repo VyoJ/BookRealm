@@ -14,12 +14,17 @@ const SearchResultCard = ({ bookData }) => {
         />
       </div>
       <div className="cart-item-content-container">
-        <h2>{bookData.title}</h2>
-        <p>{bookData.authors}</p>
+        <div className="seacrh-item-container-text text-primary">
 
-        <Link to={`/book-details/${bookData._id}`} className="button-primary">
-          Product Details
-        </Link>
+          <h2>{bookData.title}</h2>
+          <p className="text-secondary">{bookData.authors}</p>
+        </div>
+        <div className="product-details-btn">
+
+          <Link to={`/book-details/${bookData._id}`} className="button-primary">
+            Product Details
+          </Link>
+        </div>
       </div>
     </section>
   );

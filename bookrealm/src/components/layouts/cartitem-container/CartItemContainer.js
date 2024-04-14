@@ -60,7 +60,7 @@
 //   );
 // };
 
-import React, { useContext,useEffect } from "react";
+import React, { useContext,useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 import { cartContext } from "../../../App";
@@ -70,14 +70,15 @@ import CartBackendContext from "../../../pages/context/CartBackendContext";
 
 export const CartItemContainer = () => {
   const context = useContext(CartBackendContext)
-  const {getcartItem} = context
-  const { cartItem, totalAmount } = useContext(cartContext);
+  const {getcartItem,deleteCartItem} = context
+  const { cartItem, totalAmount,setcartItem } = useContext(cartContext);
+const [itemBought, setitemBought] = useState({})
   const stripeKey = "pk_test_51OzK3tSF4U7blLf0thrL3ZFYuWz3am5wArcUroVJAtyzh8msqN2m2yxljQPJReHQnVvUvyMEp58Jbr3sqNMvkRID00XmVUg2SJ"
   const navigate = useNavigate()
-  let itemBought = null
+  // let itemBought = null
   let Token = null
   // const [Bought, setBought] = useState([]);
-  // console.log(itemBought,"itemBought")
+  console.log(itemBought,"itemBought")
  
 useEffect(() => {
   const fetchData = async () => {
@@ -96,10 +97,18 @@ useEffect(() => {
     console.log(token)
     console.log(Token, "Token")
     alert('your payment has been processed')
-    itemBought = cartItem
-    navigate('/books')
+      setitemBought(cartItem)
+      console.log(itemBought)
+      setcartItem([])
+    // itemBought = cartItem
+    // navigate('/books')
     // setBought([cartItem]);
   }
+
+  useEffect(() => {
+    console.log(itemBought, "Updated itemBought");
+  }, [itemBought]);
+
   // console.log(Bought);
   // console.log("cartitem container");
   // console.log(cartItem);
@@ -112,7 +121,7 @@ useEffect(() => {
           </h2>
         ) : (
           <React.Fragment>
-            <h2 className="text-primary">Cart</h2>
+            <h2 className="text-secondary " ><b>Your <span className="text-primary ">Cart</span> Order</b></h2>
             {cartItem.map((item) => (
               <CartItemCard key={item.id}  bookdata={item} />
             ))}
