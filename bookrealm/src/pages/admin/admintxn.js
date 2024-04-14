@@ -1,24 +1,37 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/layouts/navbar/Navbar";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function AdminTransactions() {
   let [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
+    let userId = localStorage.getItem("userId");
+
     async function getTxns() {
       try {
         let txns = await axios.post("http://localhost:2000/transaction", {
           user: "admin",
         });
-        setTransactions(txns);
+        setTransactions(txns.data);
       } catch (error) {
         console.log(error);
       }
     }
-    getTxns();
+    
+    if (userId === "admin") {
+      getTxns();
+    } else {
+      navigate("/")
+    }
   }, []);
+
+  const navigate = useNavigate();
+
+  const handleRowClick = (txnId) => {
+    navigate(`/admin/transactions/${txnId}`);
+  };
 
   return (
     <>
@@ -46,20 +59,22 @@ function AdminTransactions() {
           </thead>
           <tbody>
             {transactions.map((txn, index) => (
-              <Link to={"/admin/transactions/" + txn._id}>
-                <tr className="bg-white border-b" key={index}>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                  >
-                    {txn.date}
-                  </th>
-                  <td className="px-6 py-4">{txn.userid}</td>
-                  <td className="px-6 py-4">{txn.bookid}</td>
-                  <td className="px-6 py-4">{txn.amount}</td>
-                  <td className="px-6 py-4">{txn.type}</td>
-                </tr>
-              </Link>
+              <tr
+                className="bg-white border-b"
+                key={index}
+                onClick={() => handleRowClick(txn._id)}
+              >
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                >
+                  {txn.date}
+                </th>
+                <td className="px-6 py-4">{txn.userid}</td>
+                <td className="px-6 py-4">{txn.bookid}</td>
+                <td className="px-6 py-4">{txn.amount}</td>
+                <td className="px-6 py-4">{txn.type}</td>
+              </tr>
             ))}
           </tbody>
         </table>

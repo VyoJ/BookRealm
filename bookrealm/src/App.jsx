@@ -15,8 +15,7 @@ import MyBookspage from "./pages/mybooks/myBookspage.js";
 import SearchPage from "./pages/searchpage/SearchPage.js";
 import { Signup } from "./pages/signuppage/signup.js";
 import { UserPortal } from "./pages/userportal/UserPortal.js";
-import MyBookspage from "./pages/mybooks/myBookspage.js";
-import CartItemCard from "./components/cards/cart-item-cart/CartItemCard.js";
+import AdminTransactions from "./pages/admin/admintxn.js";
 // import { Portalstate } from "./pages/userportal/context/Portalstate.js";
 
 export const userContext = createContext({});
@@ -65,11 +64,10 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/bookupload" element={<BookUpload />} />
             <Route path="/user" element={<UserPortal />} />
-            <Route path="/admin" element={<BookApprovalpage/>} />
-            <Route path="/list" element={<BookSendpage/>} />
-
-            <Route path="/mybooks" element={<MyBookspage/>} />
-
+            <Route path="/admin" element={<BookApprovalpage />} />
+            <Route path="/list" element={<BookSendpage />} />
+            <Route path="/admin/transactions" element={<AdminTransactions />} />
+            <Route path="/mybooks" element={<MyBookspage />} />
           </Routes>
         </cartContext.Provider>
         {/* </Portalstate> */}
