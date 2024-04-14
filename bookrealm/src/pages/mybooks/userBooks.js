@@ -38,7 +38,8 @@ const UserBooksGrid = ({ userId }) => {
       <div className="grid-container">
         {userBooks.map((book) =>
           book.type === "ebook" ? (
-            <Link key={book._id} to={"/mybook/" + book._id}>
+            // <Link key={book._id} to={"/mybook/" + book._id}>
+            <Link key={book._id} to={book.url}>
               <div className="grid-item">
                 <img src={book.image} alt={book.title} />
                 <h3>{book.title}</h3>
