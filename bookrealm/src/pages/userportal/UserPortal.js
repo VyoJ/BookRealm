@@ -125,7 +125,7 @@ export const UserPortal = () => {
               <h2>You can publish your own books here!</h2>
             </div>
             <button>
-              <Link to="/bookupload" className="button-primary">
+              <Link to="/mypublications" className="button-primary">
                 My publications
               </Link>
             </button>

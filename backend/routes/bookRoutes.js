@@ -25,6 +25,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/approval/:id", async (req, res) => {
+  try {
+    console.log(req.params.id);
+    let books = await Book.find({ userid: req.params.id });
+    console.log(books);
+    return res.status(200).send(books);
+  } catch (error) {
+    console.log(error);
+    return res.status(404).send("Could not find requested book");
+  }
+});
+
 router.post("/create", async (req, res) => {
   let book = new Book({
     userid: req.body.userid,
