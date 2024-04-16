@@ -37,7 +37,7 @@ const ProductListingCard = ({ bookData }) => {
     if (user) {
       const type="Rent"
       setcartItem([...cartItem, bookData])
-      await addCartItem(bookData._id, bookData.type, bookData.price*options.hr/30, options.hr,bookData.image,bookData.authors,bookData.title,type);
+      await addCartItem(bookData._id, bookData.type, bookData.price*options.hr/20, options.hr,bookData.image,bookData.authors,bookData.title,type);
       alert(`The book ${bookData.title} is added to the cart`);
       // navigate('/cart',{state:{options,type}})
     } else {

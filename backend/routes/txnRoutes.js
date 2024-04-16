@@ -29,19 +29,40 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/buy", async (req, res) => {
+  // try {
+  //   const newTxn = new Txn({
+  //     userid: req.body.userid,
+  //     bookid: req.body.bookid,
+  //     type: "buy",
+  //     amount: req.body.price,
+  //     date: new Date(),
+  //     rent_period: req.body.rent_period,
+  //   });
+  //   const savedTxn = await newTxn.save();
+  //   return res.status(201).send(savedTxn);
+  // } catch (error) {
+  //   console.log(error);
+  //   return res.status(500).send("Error creating transaction");
+  // }
+
   try {
-    const newTxn = new Txn({
-      userid: req.body.userid,
-      bookid: req.body.bookid,
-      type: "buy",
-      amount: req.body.price,
-      date: new Date(),
-    });
-    const savedTxn = await newTxn.save();
-    return res.status(201).send(savedTxn);
+    const { userid, bookid, price, rent_period } = req.body;
+    let transactions = [];
+    for (let i = 0; i < rent_period; i++) {
+      const newTxn = new Txn({
+        userid: userid,
+        bookid: bookid,
+        type: "buy",
+        amount: price,
+        date: new Date(),
+      });
+      const savedTxn = await newTxn.save();
+      transactions.push(savedTxn);
+    }
+    return res.status(201).send(transactions);
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Error creating transaction");
+    return res.status(500).send("Error creating transactions");
   }
 });
 
@@ -53,6 +74,7 @@ router.post("/rent", async (req, res) => {
       type: "rent",
       amount: req.body.price,
       date: new Date(),
+      rent_period: req.body.rent_period,
     });
     const savedTxn = await newTxn.save();
     return res.status(201).send(savedTxn);

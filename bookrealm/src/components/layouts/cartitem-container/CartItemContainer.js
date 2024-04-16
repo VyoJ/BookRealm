@@ -67,12 +67,13 @@ import { cartContext } from "../../../App";
 import CartItemCard from "../../cards/cart-item-cart/CartItemCard";
 import "./CartItemContainer.style.css";
 import CartBackendContext from "../../../pages/context/CartBackendContext";
+import axios from "axios";
 
 export const CartItemContainer = () => {
   const context = useContext(CartBackendContext);
   const { getcartItem, deleteCartItem } = context;
   const { cartItem, totalAmount, setcartItem } = useContext(cartContext);
-  const [itemBought, setitemBought] = useState({});
+  const [itemBought, setitemBought] = useState([]);
   const stripeKey =
     "pk_test_51OzK3tSF4U7blLf0thrL3ZFYuWz3am5wArcUroVJAtyzh8msqN2m2yxljQPJReHQnVvUvyMEp58Jbr3sqNMvkRID00XmVUg2SJ";
   const navigate = useNavigate();
@@ -120,15 +121,36 @@ export const CartItemContainer = () => {
     // } catch (error) {
     //   console.error("Error sending transaction data:", error);
     // }
+
+    const transactionData = cartItem.map((item) => ({
+      userid: localStorage.getItem("userId"),
+      bookid: item.bookid,
+      type: item.type,
+      price: item.price,
+      rent_period: item.rent_period,
+    }));
+
+    console.log("Data:", transactionData);
+
+    try {
+      for (let data of transactionData) {
+        console.log("Inside: ", data);
+        const response = await axios.post(
+          "http://localhost:2000/transaction/" +
+            (data.type === "Buy" ? "buy" : "rent"),
+          data
+        );
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.error("Error sending transaction data:", error);
+    }
   };
 
   useEffect(() => {
     console.log(itemBought, "Updated itemBought");
   }, [itemBought]);
 
-  // console.log(Bought);
-  // console.log("cartitem container");
-  // console.log(cartItem);
   return (
     <section className="card-item-container">
       <div className="container">

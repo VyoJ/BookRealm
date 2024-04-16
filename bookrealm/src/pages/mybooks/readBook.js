@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Document, Page, pdfjs } from "react-pdf";
 
@@ -10,8 +10,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 function ReadBook() {
   const { id } = useParams();
-  const [userBooks, setUserBooks] = useState([]);
+  const [userBooks, setUserBooks] = useState("");
   const [isBookInTransactions, setIsBookInTransactions] = useState(false);
+  const url = new URL(
+    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+  );
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -43,16 +46,18 @@ function ReadBook() {
   return (
     <div>
       {isBookInTransactions ? (
-        <div>
-          <h2>Book Details</h2>
-          <Document
-            file={userBooks}
-            options={{ workerSrc: "/pdf.worker.js" }}
-            onContextMenu={(e) => e.preventDefault()}
-          >
-            <Page pageNumber={1} />
-          </Document>
-          {/* <Link to={userBooks}>Book</Link> */}
+        // <div>
+        //   <h2>Book Details</h2>
+        //   <Document
+        //     file={url}
+        //     options={{ workerSrc: "/pdf.worker.js" }}
+        //     onContextMenu={(e) => e.preventDefault()}
+        //   >
+        //     <Page pageNumber={1} />
+        //   </Document>
+        // </div>
+        <div oncontextmenu="return false;">
+          <embed src={userBooks + "#toolbar=0"} className="h-screen w-full" />
         </div>
       ) : (
         <h2>Unauthorised access</h2>

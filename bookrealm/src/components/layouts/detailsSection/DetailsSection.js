@@ -78,7 +78,7 @@ export const DetailsSection = () => {
     if (user) {
       const type = "Rent"
       setcartItem([...cartItem, bookdata])
-      await addCartItem(bookdata._id, bookdata.type, bookdata.price * options.hr / 30, options.hr, bookdata.image, bookdata.authors, bookdata.title, type);
+      await addCartItem(bookdata._id, bookdata.type, bookdata.price * options.hr / 20, options.hr, bookdata.image, bookdata.authors, bookdata.title, type);
       alert(`The book ${bookdata.title} is added to the cart`);
       // navigate('/cart',{state:{options,type}})
     } else {
