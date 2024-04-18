@@ -25,33 +25,34 @@ import BookList from "../bookfunctions/book";
 
 const BookApprovalPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
 
   const isAdmin = (username) => {
-    // Dummy admin authorization logic
-    // Check if the username is 'admin'
-    return username === 'admin';
+    return username === "admin";
   };
 
   return (
     <section>
       <Navbar darkTheme={true} />
-      {/* Check if the user is authenticated and is an admin before rendering the BookApprovalRequests */}
       {isAuthenticated && isAdmin(username) ? (
-<div>
-<div className="flex justify-center mt-4">
-<Link to="/list" className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">
-  Go to list Page
-</Link>
-</div>
-        <BookApprovalRequests />
-        <BookList />
+        <div>
+          <div className="flex justify-center mt-4">
+            <Link
+              to="/transactions"
+              className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
+            >
+              Go to transactions Page
+            </Link>
+          </div>
+          <BookApprovalRequests />
+          <BookList />
         </div>
       ) : (
         <LoginPage
           authenticate={(username) => {
             setUsername(username);
             setIsAuthenticated(true);
+            localStorage.setItem("userId", "admin");
           }}
         />
       )}

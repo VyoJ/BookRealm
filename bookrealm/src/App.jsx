@@ -72,7 +72,7 @@ const App = () => {
               <Route path="/admin" element={<BookApprovalpage />} />
               <Route path="/list" element={<BookSendpage />} />
               <Route
-                path="/admin/transactions"
+                path="/transactions"
                 element={<AdminTransactions />}
               />
               <Route path="/mypublications" element={<MyPublications />} />
