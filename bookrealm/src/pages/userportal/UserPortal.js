@@ -1,6 +1,5 @@
-
-import React, { useContext, useState, useEffect } from 'react'
-import { userContext } from '../../App'
+import React, { useContext, useState, useEffect } from "react";
+import { userContext } from "../../App";
 import { Link } from "react-router-dom";
 import Navbar from '../../components/layouts/navbar/Navbar'
 import './UserPortal.css'
@@ -11,8 +10,7 @@ import Footer from '../../components/layouts/footer/footer'
 import { toast } from 'react-toastify';
 
 export const UserPortal = () => {
-
-  const authenticateUser = useContext(userContext)
+  const authenticateUser = useContext(userContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [personalcred, setpersonalcred] = useState({
     first_name: "",
@@ -48,12 +46,12 @@ export const UserPortal = () => {
   };
   //personal info on change
   const onchange = (e) => {
-    setpersonalcred(prevState => ({
+    setpersonalcred((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
-    }))
+      [e.target.name]: e.target.value,
+    }));
     // console.log(personalcred)
-  }
+  };
   // const imageData = localStorage.getItem('selectedFile');
   // // console.log(imageData)
 
@@ -74,31 +72,35 @@ export const UserPortal = () => {
     // alert("your personal information has been saved");
     toast.success('your personal information has been saved')
     try {
-
-      const response = await axios.put(`http://localhost:2000/user/update/${authenticateUser.uid}`, {
-        userid: authenticateUser.uid,
-        email: email,
-        first_name: first_name,
-        last_name: last_name,
-        phoneno: phoneno,
-        country: country,
-        street_address: street_address,
-        city: city,
-        postal_code: postal_code,
-        region: region,
-        // image:selectedFile
-      });
+      const response = await axios.put(
+        `http://localhost:2000/user/update/${authenticateUser.uid}`,
+        {
+          userid: authenticateUser.uid,
+          email: email,
+          first_name: first_name,
+          last_name: last_name,
+          phoneno: phoneno,
+          country: country,
+          street_address: street_address,
+          city: city,
+          postal_code: postal_code,
+          region: region,
+          // image:selectedFile
+        }
+      );
       // console.log("Post", response);
-      setUserData(response.data)
+      setUserData(response.data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:2000/user/id/${authenticateUser.uid}`);
+        const response = await axios.get(
+          `http://localhost:2000/user/id/${authenticateUser.uid}`
+        );
         setUserData(response.data);
         // console.log(response)
       } catch (error) {
@@ -118,17 +120,41 @@ export const UserPortal = () => {
   // console.log(authenticateUser.length)
   // }
   return (
-    <section >
+    <section>
       <Navbar darkTheme={true} />
+
+      <div className="user-options-wrapper">
+        <div className="user-options-container">
+          <div className="user-upload-option">
+            <div className="user-upload-option-text">
+              <h2>You can publish your own books here!</h2>
+            </div>
+            <button>
+              <Link to="/mypublications" className="button-primary">
+                My publications
+              </Link>
+            </button>
+          </div>
+          <div className="user-upload-option">
+            <div className="user-upload-option-text">
+              <h2>Read the books you've already purchased!</h2>
+            </div>
+            <button>
+              <Link to="/mybooks" className="button-primary">
+                My Books
+              </Link>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr className="text-primary mx-[10%]"/>
       <h1 className="text-center text-primary mt-9 ">Profile</h1>
       <p className="mt-1 text-sm leading-6 text-gray-600 text-center text-primary">
         This information will be only displayed to you.
       </p>
 
-
-      <div className='wrapper'>
-        <form className='text-primary' onSubmit={handlesubmit}>
-
+      <div className="wrapper">
+        <form className="text-primary" onSubmit={handlesubmit}>
           <div className="infocontainer">
             {/* photo */}
             <div className="info-photo">
@@ -196,8 +222,8 @@ export const UserPortal = () => {
             </div>
 
             {/* personal information */}
-            {userData === null &&
-              (<div className="info-photo-text">
+            {userData === null && (
+              <div className="info-photo-text">
                 <div className="border-b border-gray-900/10 pb-12">
                   <h2 className="text-base font-semibold leading-7 text-gray-900">
                     Personal Information
@@ -400,16 +426,23 @@ export const UserPortal = () => {
                   </div>
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6  ">
-                  <button type='submit' id='save' className='className="text-sm font-semibold leading-6 mr-0 button-primary'>
+                  <button
+                    type="submit"
+                    id="save"
+                    className='className="text-sm font-semibold leading-6 mr-0 button-primary'
+                  >
                     Save
                   </button>
                 </div>
-              </div>)}
+              </div>
+            )}
 
-            {userData !== null &&
-              (<div className="info-card-text">
+            {userData !== null && (
+              <div className="info-card-text">
                 <div className="border-b border-gray-900/10 pb-12 ">
-                  <h2 className="text-base font-semibold leading-7 text-gray-900 ml-7">Personal Information </h2>
+                  <h2 className="text-base font-semibold leading-7 text-gray-900 ml-7">
+                    Personal Information{" "}
+                  </h2>
                   <div className="mt-10 grid grid-cols-1 gap-x-0.5 gap-y-5 sm:grid-cols-2 ">
                     <div className="info-card">
                       <span className="info-label">First Name :</span>
@@ -449,41 +482,16 @@ export const UserPortal = () => {
                     <p className="info-value">{userData.street_address}</p>
                   </div>
                 </div>
-                <button className='button-primary' onClick={handleedit}>edit</button>
-              </div>)}
+                <button className="button-primary" onClick={handleedit}>
+                  edit
+                </button>
+              </div>
+            )}
           </div>
         </form>
-
       </div>
-      <div className='user-options-wrapper'>
-        <div className='user-options-container'>
 
-          <div className="user-upload-option">
-            <div className="user-upload-option-text">
-              <h2>You can upload the books from here</h2>
-            </div>
-            <button><Link
-              to="/bookupload"
-              className="button-primary"
-            >
-              upload
-            </Link></button>
-          </div>
-          <div className="user-upload-option">
-          <div className="user-upload-option-text">
-              <h2>Check the Books in your Gallery</h2>
-            </div>
-            <button><Link
-              to="/mybooks"
-              className="button-primary"
-            >
-              MyBooks
-            </Link></button>
-          </div>
-        </div>
-
-      </div>
       <Footer />
     </section>
-  )
-}
+  );
+};

@@ -24,8 +24,7 @@ router.post("/add", async (req, res) => {
       image: req.body.image,
       type: req.body.type,
       price: req.body.price,
-      order_type:req.body.order_type,
-      approved: req.body.approved || "Not Approved", // Set a default value if not provided
+      order_type: req.body.order_type,
       date: new Date(),
       rent_period: req.body.rent_period,
     });

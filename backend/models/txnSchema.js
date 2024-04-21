@@ -7,7 +7,7 @@ let txnSchema = new Schema({
   type: { type: String, required: true },
   amount: { type: String, required: true },
   date: { type: Date, required: true },
-  rent_period: { type: Date },
+  rent_period: { type: Number },
 });
 
 module.exports = mongoose.model("Transaction", txnSchema);

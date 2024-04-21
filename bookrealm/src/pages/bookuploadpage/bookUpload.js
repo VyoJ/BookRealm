@@ -183,6 +183,8 @@ function BookUpload() {
   const [price, setPrice] = useState(0);
   const [length, setLength] = useState(0);
 
+  const navigate = useNavigate();
+
   const handleEbookChange = (event) => {
     setIsEbook(event.target.value === "ebook");
   };
@@ -258,6 +260,7 @@ function BookUpload() {
         url: data.ebookFile,
       });
       console.log(response.data);
+      navigate("/mypublications");
     } catch (error) {
       console.error("Error uploading files or submitting data:", error);
     }
@@ -266,8 +269,6 @@ function BookUpload() {
   return (
     <>
       <section>
-
-
         <Navbar darkTheme={true} />
         <div className="text-center text-2xl mt-4">
           Upload your <span className="text-primary">Book</span> for publication

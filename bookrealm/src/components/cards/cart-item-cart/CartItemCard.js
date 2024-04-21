@@ -6,14 +6,14 @@ import CartBackendContext from "../../../pages/context/CartBackendContext";
 import { toast } from "react-toastify";
 
 const CartItemCard = ({ bookdata }) => {
-  const { deleteCartItem } = useContext(CartBackendContext)
-  const location = useLocation()
-  const navigate = useNavigate()
+  const { deleteCartItem } = useContext(CartBackendContext);
+  const location = useLocation();
+  const navigate = useNavigate();
   // console.log(location)
   // const { cartItem, setcartItem } = useContext(cartContext);
   // const [options, setoptions] = useState(location.state ? location.state.options : {})
   // const  order_type = location.state ? location.state.type : ''
-  const order_type = bookdata.order_type
+  const order_type = bookdata.order_type;
   // console.log(bookdata,'bookdata form cartcard')
   // console.log(order_type)
   // console.log(bookdata,'from cartcard');
@@ -57,9 +57,9 @@ const CartItemCard = ({ bookdata }) => {
         </div>
 
         <h3 className="cart-item-price"><b>&#8377;{bookdata.price}</b></h3>
+
         <div className="cart-btn-container">
           <div className="cart-btn-part">
-
             <button onClick={handleRemove} className="delete_button">
               Remove from Cart
             </button>
