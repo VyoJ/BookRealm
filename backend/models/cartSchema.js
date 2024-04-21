@@ -17,6 +17,7 @@ let cartSchema = new Schema({
     type: Date,
     default: Date.now
 },
+// date: { type: String, required: true },
 rent_period: {
     type: String, // Change the type to String
     required: true

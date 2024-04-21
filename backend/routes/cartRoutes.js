@@ -51,16 +51,6 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// router.delete("/deleteAll", async (req, res) => {
-//   try {
-//     // Delete all items from the cart
-//     await Cart.deleteMany({});
-//     res.status(200).send("All items deleted from the cart successfully.");
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Internal server error.");
-//   }
-// });
 
 router.put("/:id", async (req, res) => {
   try {
