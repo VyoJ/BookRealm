@@ -25,9 +25,6 @@ function ReadBook() {
   const [userBooks, setUserBooks] = useState("");
   const [isBookInTransactions, setIsBookInTransactions] = useState(false);
   const [transaction, setTransaction] = useState({});
-  const url = new URL(
-    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-  );
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -47,9 +44,19 @@ function ReadBook() {
         );
 
         if (bookTransaction) {
-          setIsBookInTransactions(true);
-          setTransaction(bookTransaction); // Store the transaction date
-          // Fetch the book details if needed
+          if (bookTransaction.type === "rent") {
+            const expiryDate = new Date(bookTransaction.date);
+            expiryDate.setHours(
+              expiryDate.getHours() + bookTransaction.rent_period
+            );
+            if (new Date() < expiryDate) {
+              setIsBookInTransactions(true);
+              setTransaction(bookTransaction);
+            }
+          } else {
+            setIsBookInTransactions(true);
+            setTransaction(bookTransaction);
+          }
         }
         if (bookTransaction) {
           const book = await axios.get(`http://localhost:2000/book/${id}`);

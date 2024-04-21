@@ -147,6 +147,7 @@ const UserBooksGrid = ({ userId }) => {
               ...bookResponse.data,
               rent_period: item.rent_period,
               date: item.date,
+              type: item.type,
             };
           });
           const books = await Promise.all(booksPromises);
@@ -161,7 +162,17 @@ const UserBooksGrid = ({ userId }) => {
     fetchUserBooks();
   }, [userId]);
 
+  // const isBookExpired = (book) => {
+  //   const expiryDate = new Date(book.date);
+  //   expiryDate.setHours(expiryDate.getHours() + book.rent_period);
+  //   return new Date() > expiryDate;
+  // };
+
   const isBookExpired = (book) => {
+    console.log(book)
+    if (book.type !== "rent") {
+      return false;
+    }
     const expiryDate = new Date(book.date);
     expiryDate.setHours(expiryDate.getHours() + book.rent_period);
     return new Date() > expiryDate;
@@ -181,14 +192,12 @@ const UserBooksGrid = ({ userId }) => {
               <p className="text-gray-700 text-base">{book.authors}</p>
               <p className="text-gray-700 text-sm">{book.price}</p>
               <p className="text-gray-500 text-sm my-1">{book.subtitle}</p>
-              {book.type === "ebook" ? (
-                !isBookExpired(book) ? (
-                  <Link to={"/mybook/" + book._id}>
-                    <button className="button-primary">Read Now!</button>
-                  </Link>
-                ) : (
-                  <p className="text-[#FF0000]">This book is expired.</p>
-                )
+              {(book.type === "ebook" && book.transaction_type === 'rent' && !isBookExpired(book)) || book.type === "buy" ? (
+                <Link to={"/mybook/" + book._id}>
+                  <button className="button-primary">Read Now!</button>
+                </Link>
+              ) : book.type === "rent" && isBookExpired(book) ? (
+                <p className="text-[#FF0000]">This book is expired.</p>
               ) : null}
             </div>
           </div>
