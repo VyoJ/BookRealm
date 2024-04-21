@@ -70,6 +70,7 @@
 // export default BookApprovalRequests;
 
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 function BookApprovalRequests() {
   const [books, setBooks] = useState([]);
@@ -102,11 +103,14 @@ function BookApprovalRequests() {
         }
       );
       if (!response.ok) {
+        toast.error('failed to approve book')
         throw new Error("Failed to approve book");
       }
       fetchBooks(); // Refresh book list after approval
+      toast.success('book successfully approved')
     } catch (error) {
       console.error("Error approving book:", error);
+      toast.error('some error occured while approving the book')
     }
   };
 
@@ -119,11 +123,14 @@ function BookApprovalRequests() {
         }
       );
       if (!response.ok) {
+        toast.error('failed to failed book')
         throw new Error("Failed to reject book");
       }
       fetchBooks();
+      toast.success('book successfully rejected')
     } catch (error) {
       console.error("Error rejecting book:", error);
+      toast.error('some error occured while rejecting the book')
     }
   };
 

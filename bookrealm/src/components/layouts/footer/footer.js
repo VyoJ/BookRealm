@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import "./footer.styles.css";
 import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   const form = useRef();
@@ -21,6 +22,7 @@ const Footer = () => {
       });
 
     e.target.reset();
+    toast.success('Your querry has been submitted successfully')
   };
 
   return (

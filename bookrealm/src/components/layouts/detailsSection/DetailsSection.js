@@ -6,6 +6,7 @@ import axios from "axios";
 import CartBackendContext from "../../../pages/context/CartBackendContext";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from "react-toastify";
 
 export const DetailsSection = () => {
   const { id } = useParams(); //console.log(id)
@@ -66,7 +67,8 @@ export const DetailsSection = () => {
       const type = 'Buy'
       setcartItem([...cartItem, bookdata])
       await addCartItem(bookdata._id, bookdata.type, bookdata.price * options.quantity, options.quantity, bookdata.image, bookdata.authors, bookdata.title, type);
-      alert(`The book ${bookdata.title} is added to the cart`);
+      // alert(`The book ${bookdata.title} is added to the cart`);
+      toast(`The book ${bookdata.title} is added to the cart`)
       // navigate('/cart',{state:{options,type}})
     } else {
       navigate("/login");
@@ -79,8 +81,9 @@ export const DetailsSection = () => {
       const type = "Rent"
       setcartItem([...cartItem, bookdata])
       await addCartItem(bookdata._id, bookdata.type, bookdata.price * options.hr / 30, options.hr, bookdata.image, bookdata.authors, bookdata.title, type);
-      alert(`The book ${bookdata.title} is added to the cart`);
+      // alert(`The book ${bookdata.title} is added to the cart`);
       // navigate('/cart',{state:{options,type}})
+      toast(`The book ${bookdata.title} is added to the cart`)
     } else {
       navigate("/login");
       alert("Please login in to your account to proceed");

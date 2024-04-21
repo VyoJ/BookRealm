@@ -2,8 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./searchresultcard.styles.css";
 
+
 const SearchResultCard = ({ bookData }) => {
   console.log(bookData);
+
+
   return (
     <section className="cart-item">
       <div className="cart-item-img-container">

@@ -22,6 +22,7 @@ import Footer from "../../components/layouts/footer/footer";
 import BookList from "./book";
 import LoginPage from "../admin/adminlogin";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const BookSendpage = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
@@ -34,7 +35,8 @@ const BookSendpage = () => {
       setIsAdminAuthenticated(true);
     } else {
       setIsAdminAuthenticated(false);
-      alert("You need to login as admin to access this page");
+      // alert("You need to login as admin to access this page");
+      toast('You need to login as admin to access this page')
     }
   };
 

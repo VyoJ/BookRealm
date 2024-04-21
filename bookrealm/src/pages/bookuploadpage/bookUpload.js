@@ -170,6 +170,7 @@ import {
 } from "firebase/storage";
 import axios from "axios";
 import Navbar from "../../components/layouts/navbar/Navbar";
+import { toast } from "react-toastify";
 
 function BookUpload() {
   const [isEbook, setIsEbook] = useState("physical");
@@ -211,11 +212,13 @@ function BookUpload() {
           },
           (error) => {
             reject(error);
+            toast.error('Your book has not been uploaded due to sme issues')
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               resolve(downloadURL);
             });
+            toast.success('Book has been sent to review for upload')
           }
         );
       });

@@ -2,6 +2,8 @@ import React,{useContext, useState} from "react";
 import CartBackendContext from "./CartBackendContext";
 import axios  from "axios";
 import { userContext,cartContext } from "../../App";
+import {  toast } from 'react-toastify';
+
 
 const CartState = ( props) => {
     const {cartItem,setcartItem } = useContext(cartContext)
@@ -48,7 +50,6 @@ const CartState = ( props) => {
             console.error(error)
         }
     }
-    
 
     return(
         <CartBackendContext.Provider value={{getcartItem,addCartItem,deleteCartItem}}>

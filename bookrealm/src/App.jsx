@@ -17,6 +17,8 @@ import { Signup } from "./pages/signuppage/signup.js";
 import { UserPortal } from "./pages/userportal/UserPortal.js";
 // import { Portalstate } from "./pages/userportal/context/Portalstate.js";
 import CartState from "./pages/context/CartState.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const userContext = createContext({});
 export const cartContext = createContext({});
@@ -76,6 +78,7 @@ const App = () => {
         </cartContext.Provider>
         {/* </Portalstate> */}
       </userContext.Provider>
+      <ToastContainer />
     </ScrollToTop>
   );
 };

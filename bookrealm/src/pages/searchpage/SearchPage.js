@@ -6,6 +6,7 @@ import "./searchpage.styles.css";
 import axios from "axios";
 // import { book } from "../../util/bookData";
 import SearchResultCard from "../../components/cards/search-result-card/SearchResultCard";
+import { toast } from "react-toastify";
 
 const SearchPage = () => {
   const location = useLocation();
@@ -33,15 +34,16 @@ const SearchPage = () => {
           data.title.toLowerCase().includes(location.state.toLowerCase())
         );
         setSearchResult(searchValue);
+        
       } catch (error) {
-
-
         console.error("Error fetching book:", error.message);
       }
     };
 
     fetchBooks(); // Call the fetchBooks function
   }, [location.state]); // Dependency array to re-run the effect when location.state changes
+
+
 
   return (
     <section>
