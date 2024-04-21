@@ -105,6 +105,7 @@ background-image: linear-gradient(180deg, #71C4FFFF 0%, #2D0B09FF 0%, #efc64d 99
     margin: 2px;
     gap: 0.5rem;
 }
+
 .btn-addcart{
     display: inline;
     background-color: var(--primary-color);
