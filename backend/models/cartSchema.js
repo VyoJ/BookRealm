@@ -12,12 +12,12 @@ let cartSchema = new Schema({
   order_type: { type: String, require: true },
   date: {
     type: Date,
-    default: Date.now,
-  },
-  rent_period: {
-    type: String,
-    required: true,
-  },
+    default: Date.now
+},
+rent_period: {
+    type: String, // Change the type to String
+    required: true
+},
 });
 
 module.exports = mongoose.model("Cart", cartSchema);

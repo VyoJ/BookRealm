@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import "./cart-item-card.style.css";
 import { cartContext } from "../../../App";
 import { useLocation, useNavigate } from "react-router-dom";
 import CartBackendContext from "../../../pages/context/CartBackendContext";
+import { toast } from "react-toastify";
 
 const CartItemCard = ({ bookdata }) => {
   const { deleteCartItem } = useContext(CartBackendContext);
@@ -18,8 +19,15 @@ const CartItemCard = ({ bookdata }) => {
   // console.log(bookdata,'from cartcard');
 
   const handleRemove = () => {
-    deleteCartItem(bookdata._id);
+    toast.info('item removed form the cart')
+    deleteCartItem(bookdata._id)
   };
+
+
+  const dateString = bookdata.date
+  const date = new Date(dateString)
+  const formattedDate = date.toLocaleString()
+  // console.log(formattedDate)
 
   return (
     <section className="cart-item">
@@ -57,7 +65,8 @@ const CartItemCard = ({ bookdata }) => {
             </button>
           </div>
           <div className="cart-date-part text-secondary" style={{ fontSize: "small" }}>
-            <p>date : {bookdata.date}</p>
+            {/* <p>date : {bookdata.date}</p> */}
+            <p>Date : {formattedDate}</p>
           </div>
         </div>
       </div>

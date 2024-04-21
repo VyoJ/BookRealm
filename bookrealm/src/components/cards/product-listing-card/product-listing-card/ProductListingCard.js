@@ -5,6 +5,8 @@ import { userContext, cartContext } from "../../../../App";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CartBackendContext from "../../../../pages/context/CartBackendContext";
+import { toast } from 'react-toastify';
+
 
 const ProductListingCard = ({ bookData }) => {
   const navigate = useNavigate()
@@ -18,18 +20,19 @@ const ProductListingCard = ({ bookData }) => {
 
   const handelclick = () => {
     navigate(`/book-details/${bookData._id}`)
-    //  navigate('books')
   }
   const handelBuyClick = async() => {
     if (user) {
       const type='Buy'
       setcartItem([...cartItem, bookData])
       await addCartItem(bookData._id, bookData.type, bookData.price*options.quantity, options.quantity,bookData.image,bookData.authors,bookData.title,type);
-      alert(`The book ${bookData.title} is added to the cart`);
+      // alert(`The book ${bookData.title} is added to the cart`);
+      toast.info(`The book ${bookData.title} is added to the cart`)
       // navigate('/cart',{state:{options,type}})
     } else {
-      navigate("/login");
+      // toast("Please login in to your account to proceed");
       alert("Please login in to your account to proceed");
+      navigate("/login");
     }
   }
 
@@ -37,11 +40,13 @@ const ProductListingCard = ({ bookData }) => {
     if (user) {
       const type="Rent"
       setcartItem([...cartItem, bookData])
-      await addCartItem(bookData._id, bookData.type, bookData.price*options.hr/20, options.hr,bookData.image,bookData.authors,bookData.title,type);
-      alert(`The book ${bookData.title} is added to the cart`);
+      await addCartItem(bookData._id, bookData.type, bookData.price*options.hr/30, options.hr,bookData.image,bookData.authors,bookData.title,type);
+      // alert(`The book ${bookData.title} is added to the cart`);
+      toast(`The book ${bookData.title} is added to the cart`)
       // navigate('/cart',{state:{options,type}})
     } else {
       navigate("/login");
+       // toast("Please login in to your account to proceed");
       alert("Please login in to your account to proceed");
     }
   }
@@ -105,7 +110,7 @@ const ProductListingCard = ({ bookData }) => {
           View
         </button>
       </div>
-
+     
     </div>
   );
 };

@@ -54,6 +54,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -75,8 +76,10 @@ const BookList = () => {
     try {
       await axios.delete(`http://localhost:2000/book/delete/${id}`);
       setBooks(books.filter((book) => book._id !== id));
+     toast.info('book is deleted')
     } catch (error) {
       console.error("Error deleting book:", error);
+      toast.error('error deleting the book')
     }
   };
 

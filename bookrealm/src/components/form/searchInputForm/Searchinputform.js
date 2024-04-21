@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./searchinputform.styles.css";
+import { toast } from "react-toastify";
 
 const SearchInputForm = ({ darkTheme }) => {
   const [searchField, setSearchField] = useState("");
@@ -12,7 +13,8 @@ const SearchInputForm = ({ darkTheme }) => {
 
   const redirectToSearch = () => {
     if (searchField.trim() === "") {
-      alert("SearchField is Empty");
+      // alert("SearchField is Empty");
+      toast.warning('SearchField is Empty')
     } else {
       // Check if navigate function is available
       if (navigate) {

@@ -18,6 +18,8 @@ import { UserPortal } from "./pages/userportal/UserPortal.js";
 import AdminTransactions from "./pages/admin/admintxn.js";
 // import { Portalstate } from "./pages/userportal/context/Portalstate.js";
 import CartState from "./pages/context/CartState.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ReadBook from "./pages/mybooks/readBook.js";
 import MyPublications from "./pages/mypublications/mypublications.js";
 
@@ -83,6 +85,7 @@ const App = () => {
         </cartContext.Provider>
         {/* </Portalstate> */}
       </userContext.Provider>
+      <ToastContainer />
     </ScrollToTop>
   );
 };

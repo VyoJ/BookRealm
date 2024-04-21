@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { userContext } from "../../App";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/layouts/navbar/Navbar";
-import "./UserPortal.css";
-import upload from "./upload-pic.png";
-import axios from "axios";
-import Footer from "../../components/layouts/footer/footer";
+import Navbar from '../../components/layouts/navbar/Navbar'
+import './UserPortal.css'
+// import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import upload from './upload-pic.png'
+import axios from 'axios'
+import Footer from '../../components/layouts/footer/footer'
+import { toast } from 'react-toastify';
 
 export const UserPortal = () => {
   const authenticateUser = useContext(userContext);
@@ -67,7 +69,8 @@ export const UserPortal = () => {
       postal_code,
       region,
     } = personalcred;
-    alert("your personal information has been saved");
+    // alert("your personal information has been saved");
+    toast.success('your personal information has been saved')
     try {
       const response = await axios.put(
         `http://localhost:2000/user/update/${authenticateUser.uid}`,
@@ -101,15 +104,17 @@ export const UserPortal = () => {
         setUserData(response.data);
         // console.log(response)
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error('Error fetching user data:', error);
+        toast.error('Error fetching your information,check your network')
       }
     };
     fetchUserData();
   }, [authenticateUser.uid]);
 
   const handleedit = () => {
-    setUserData(null);
-  };
+    setUserData(null)
+    toast.warning('This will change Your saved information')
+  }
   // if(authenticateUser.length===0){
   // setUserData(null)
   // console.log(authenticateUser.length)

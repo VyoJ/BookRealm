@@ -67,6 +67,7 @@ import { cartContext } from "../../../App";
 import CartItemCard from "../../cards/cart-item-cart/CartItemCard";
 import "./CartItemContainer.style.css";
 import CartBackendContext from "../../../pages/context/CartBackendContext";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 export const CartItemContainer = () => {
@@ -80,6 +81,36 @@ export const CartItemContainer = () => {
   // let itemBought = null
   let Token = null;
   // const [Bought, setBought] = useState([]);
+  console.log(itemBought,"itemBought")
+ 
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      await getcartItem();
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
+  fetchData();
+}, []);
+
+const clearCart = () => {
+  cartItem.map((item) => (
+    deleteCartItem(item._id)
+  ))
+}
+
+// try {
+  
+  const onToken = async (token) => {
+    //the actuall payment to be handel in the backend from here
+  Token = token
+  console.log(token)
+  console.log(Token, "Token")
+  toast.success('your payment has been processed')
+    setitemBought(cartItem)
+    console.log(itemBought)
+    clearCart()
   console.log(itemBought, "itemBought");
 
   useEffect(() => {
@@ -104,6 +135,14 @@ export const CartItemContainer = () => {
     setcartItem([]);
     // itemBought = cartItem
     // navigate('/books')
+}
+// } catch (error) {
+//   toast.error('Sorry,your transaction has been failed for some reason')
+// }
+
+  // useEffect(() => {
+  //   console.log(itemBought, "Updated itemBought");
+  // }, [itemBought]);
     // setBought([cartItem]);
 
     // const transactionData = {
