@@ -69,8 +69,8 @@ import { userContext,cartContext } from "../../App";
 import {  toast } from 'react-toastify';
 
 
-import axios from "axios";
-import { userContext, cartContext } from "../../App";
+
+
 
 
 const CartState = (props) => {
