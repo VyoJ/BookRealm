@@ -151,7 +151,7 @@ const UserBooksGrid = ({ userId }) => {
             };
           });
           const books = await Promise.all(booksPromises);
-          console.log(books);
+          // console.log(books);
           setUserBooks(books);
         }
       } catch (error) {
@@ -169,7 +169,7 @@ const UserBooksGrid = ({ userId }) => {
   // };
 
   const isBookExpired = (book) => {
-    console.log(book)
+    // console.log(book)
     if (book.type !== "rent") {
       return false;
     }

@@ -16,8 +16,6 @@ export const CartItemContainer = () => {
   const stripeKey =
     "pk_test_51OzK3tSF4U7blLf0thrL3ZFYuWz3am5wArcUroVJAtyzh8msqN2m2yxljQPJReHQnVvUvyMEp58Jbr3sqNMvkRID00XmVUg2SJ";
   const navigate = useNavigate();
-  // let itemBought = null
-  // const [Bought, setBought] = useState([]);
   console.log(itemBought,"itemBought")
  
 useEffect(() => {
@@ -32,9 +30,11 @@ useEffect(() => {
 }, []);
 
 const clearCart = () => {
-  cartItem.map((item) => (
+  cartItem.forEach((item) => (
     deleteCartItem(item._id)
   ))
+  setcartItem([])
+  getcartItem()
 }
 
 
@@ -44,66 +44,27 @@ const clearCart = () => {
   toast.success('your payment has been processed')
     setitemBought(cartItem)
     console.log(itemBought)
-    clearCart()
+    // clearCart()
   console.log(itemBought, "itemBought");
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       await getcartItem();
-  //     } catch (error) {
-  //       console.error("Error fetching cart items:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
-//   const onToken = async (token) => {
-//     //the actuall payment to be handel in the backend from here
-//     Token = token;
-//     console.log(token);
-//     console.log(Token, "Token");
-//     alert("your payment has been processed");
-//     setitemBought(cartItem);
-//     console.log(itemBought);
-//     setcartItem([]);
-//     // itemBought = cartItem
-//     // navigate('/books')
-// }
-
-
-  // useEffect(() => {
-  //   console.log(itemBought, "Updated itemBought");
-  // }, [itemBought]);
-    // setBought([cartItem]);
-
-    // const transactionData = {
-    //   userId: localStorage.getItem("userId"),
-    //   itemsBought: itemBought,
-    //   totalAmount: totalAmount,
-    // };
-
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:2000/transactions",
-    //     transactionData
-    //   );
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error("Error sending transaction data:", error);
-    // }
-
-    const transactionData = cartItem.map((item) => ({
-      userid: localStorage.getItem("userId"),
-      bookid: item.bookid,
-      type: item.type,
-      price: item.price,
-      rent_period: item.rent_period,
-    }));
-
-    console.log("Data:", transactionData);
 
     try {
+      await clearCart();     
+      setcartItem([]);
+      
+      await getcartItem();
+
+      setitemBought(cartItem);
+      const transactionData = cartItem.map((item) => ({
+        userid: localStorage.getItem("userId"),
+        bookid: item.bookid,
+        type: item.type,
+        price: item.price,
+        rent_period: item.rent_period,
+      }));
+  
+      console.log("Data:", transactionData);
+     
       for (let data of transactionData) {
         console.log("Inside: ", data);
         const response = await axios.post(
