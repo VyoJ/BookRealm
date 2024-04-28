@@ -68,12 +68,33 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { getAuth, signOut } from "firebase/auth";
 import fire from "../../../firebase/Firebase";
+import axios from "axios";
+
 
 export default function Navbar({ darkTheme, darkTextTheme }) {
   const user = useContext(userContext);
   const navigate = useNavigate();
   const auth = getAuth(fire);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userData, setUserData] = useState(null);
+  // console.log(userData,'from navbar')
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:2000/user/id/${user.uid}`
+        );
+        console.log('fetch success for navbar')
+        setUserData(response.data);
+        // console.log(response)
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        toast.error('Error fetching your information,check your network')
+      }
+    };
+    fetchUserData();
+  }, [user.uid]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -145,7 +166,8 @@ export default function Navbar({ darkTheme, darkTextTheme }) {
                 <FontAwesomeIcon icon={faCartShopping} />
               </Link>
               <div className=" ml-5" style={{ color: "white" }}>
-                <p>hi , User </p>
+                <p>hi , user </p>
+                {/* <p>hi , {userData.first_name} </p> */}
               </div>
             </>
           ) : (

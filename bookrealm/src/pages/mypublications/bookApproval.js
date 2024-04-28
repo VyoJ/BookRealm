@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import './mypublications.style.css'
+
 
 const ApprovalGrid = ({ userId }) => {
   const [userBooks, setUserBooks] = useState([]);
@@ -22,25 +24,28 @@ const ApprovalGrid = ({ userId }) => {
   }, [userId]);
 
   return (
-    <div>
-      <h2 className="font-semibold text-primary text-center mt-4 text-3xl">
+    <div className="container-book-approval">
+      <h2 className="font-semibold text-secondary text-center mt-4 text-3xl">
         Your Book Approval Requests
       </h2>
-      <div className="">
+      <div className="book--approval-wrapper">
         {userBooks.map((book) => (
-          <div key={book._id} className="max-w-sm rounded shadow-lg m-4">
+          <div key={book._id} className="max-w-sm rounded shadow-lg m-4 book-approval-card">
             <img className="w-full" src={book.image} alt={book.title} />
             <div className="px-6 py-4">
-              <div className="font-bold text-xl mb-2">{book.title}</div>
-              <p className="text-gray-700 text-base">{book.authors}</p>
-              <p className="text-gray-700 text-sm">{book.price}</p>
-              <p className="text-gray-500 text-sm my-1">{book.subtitle}</p>
+              <div className="book-approval-card-text"> 
+              <div className="font-bold text-xl mb-2">Title : { book.title}</div>
+
+              <p className="">Author : {book.authors}</p>
+              <p className="text-sm">Price : {book.price}</p>
+              <p className="text-sm my-1">Description : {book.subtitle}</p>
+              </div>
               {book.approved === "Approved" ? (
                 <Link to={"/book-details/" + book._id}>
-                  <p className="text-[#2cfc03] text-sm">{book.approved}</p>
+                  <p className="text-[#2cfc03] text-sm ">  Status : {book.approved}</p>
                 </Link>
               ) : (
-                <p className="text-[#fc0303] text-sm">{book.approved}</p>
+                <p className="text-[#fc0303] text-sm">Status : {book.approved}</p>
               )}
             </div>
           </div>
