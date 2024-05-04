@@ -9,7 +9,7 @@ const txnRoutes = require("./routes/txnRoutes");
 const cartRoutes = require("./routes/cartRoutes")
 
 const app = express();
-const PORT = 2000;
+const PORT = process.env.PORT || 2000;
 
 const connectToDb = async () => {
   try {
