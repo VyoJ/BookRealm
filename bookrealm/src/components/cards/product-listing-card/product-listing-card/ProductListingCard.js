@@ -51,7 +51,8 @@ const ProductListingCard = ({ bookData }) => {
     }
   }
   const toggleDropdown = () => {
-    setshowDropdown(!showDropdown)
+    // setshowDropdown(!showDropdown)
+    setshowDropdown(true)
   }
   const handeloptions = (name,operation) => {
     setoptions((prev) => {
@@ -82,7 +83,8 @@ const ProductListingCard = ({ bookData }) => {
       </div>
 
       <div className="card-btn-container">
-        <button className="btn-addcart text-secondary" onClick={toggleDropdown} >Add to  <FontAwesomeIcon icon={faCartShopping} /></button>
+        {/* <button className="btn-addcart text-secondary" onClick={toggleDropdown}  >Add to  <FontAwesomeIcon icon={faCartShopping} /></button> */}
+        <button className="btn-addcart text-secondary"  onMouseEnter={toggleDropdown}  >Add to  <FontAwesomeIcon icon={faCartShopping} /></button>
         {showDropdown && (
           <div className="dropdown-menu">
             <div className="buy">
