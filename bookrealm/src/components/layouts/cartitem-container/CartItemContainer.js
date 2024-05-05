@@ -16,42 +16,38 @@ export const CartItemContainer = () => {
   const stripeKey =
     "pk_test_51OzK3tSF4U7blLf0thrL3ZFYuWz3am5wArcUroVJAtyzh8msqN2m2yxljQPJReHQnVvUvyMEp58Jbr3sqNMvkRID00XmVUg2SJ";
   const navigate = useNavigate();
-  console.log(itemBought,"itemBought")
- 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      await getcartItem();
-    } catch (error) {
-      console.error("Error fetching cart items:", error);
-    }
+  console.log(itemBought, "itemBought");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await getcartItem();
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const clearCart = () => {
+    cartItem.forEach((item) => deleteCartItem(item._id));
+    setcartItem([]);
+    getcartItem();
   };
-  fetchData();
-}, []);
-
-const clearCart = () => {
-  cartItem.forEach((item) => (
-    deleteCartItem(item._id)
-  ))
-  setcartItem([])
-  getcartItem()
-}
-
 
   const onToken = async (token) => {
     //the actuall payment to be handel in the backend from here
-  console.log('payment token ',token)
-  toast.success('your payment has been processed')
-    setitemBought(cartItem)
-    console.log(itemBought)
+    console.log("payment token ", token);
+    toast.success("your payment has been processed");
+    setitemBought(cartItem);
+    console.log(itemBought);
     // clearCart()
-  console.log(itemBought, "itemBought");
-
+    console.log(itemBought, "itemBought");
 
     try {
-      await clearCart();     
+      await clearCart();
       setcartItem([]);
-      
+
       await getcartItem();
 
       setitemBought(cartItem);
@@ -62,9 +58,9 @@ const clearCart = () => {
         price: item.price,
         rent_period: item.rent_period,
       }));
-  
+
       console.log("Data:", transactionData);
-     
+
       for (let data of transactionData) {
         console.log("Inside: ", data);
         const response = await axios.post(
