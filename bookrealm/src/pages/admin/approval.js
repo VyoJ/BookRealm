@@ -9,7 +9,7 @@
 
 //     const fetchBooks = async () => {
 //         try {
-//             const response = await fetch('http://localhost:2000/admin/approvalrequests');
+//             const response = await fetch('https://bookrealm.onrender.com/admin/approvalrequests');
 //             if (!response.ok) {
 //                 throw new Error('Failed to fetch books');
 //             }
@@ -22,7 +22,7 @@
 
 //     const approveBook = async (bookId) => {
 //         try {
-//             const response = await fetch(`http://localhost:2000/admin/${bookId}/approve`, {
+//             const response = await fetch(`https://bookrealm.onrender.com/admin/${bookId}/approve`, {
 //                 method: 'PATCH'
 //             });
 //             if (!response.ok) {
@@ -36,7 +36,7 @@
 
 //     const rejectBook = async (bookId) => {
 //         try {
-//             const response = await fetch(`http://localhost:2000/admin/${bookId}/reject`, {
+//             const response = await fetch(`https://bookrealm.onrender.com/admin/${bookId}/reject`, {
 //                 method: 'PATCH'
 //             });
 //             if (!response.ok) {
@@ -82,7 +82,7 @@ function BookApprovalRequests() {
   const fetchBooks = async () => {
     try {
       const response = await fetch(
-        "http://localhost:2000/admin/approvalrequests"
+        "https://bookrealm.onrender.com/admin/approvalrequests"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch books");
@@ -97,7 +97,7 @@ function BookApprovalRequests() {
   const approveBook = async (bookId) => {
     try {
       const response = await fetch(
-        `http://localhost:2000/admin/${bookId}/approve`,
+        `https://bookrealm.onrender.com/admin/${bookId}/approve`,
         {
           method: "PATCH",
         }
@@ -117,7 +117,7 @@ function BookApprovalRequests() {
   const rejectBook = async (bookId) => {
     try {
       const response = await fetch(
-        `http://localhost:2000/admin/${bookId}/reject`,
+        `https://bookrealm.onrender.com/admin/${bookId}/reject`,
         {
           method: "PATCH",
         }

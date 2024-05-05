@@ -68,7 +68,7 @@ const clearCart = () => {
       for (let data of transactionData) {
         console.log("Inside: ", data);
         const response = await axios.post(
-          "http://localhost:2000/transaction/" +
+          "https://bookrealm.onrender.com/transaction/" +
             (data.type === "Buy" ? "buy" : "rent"),
           data
         );

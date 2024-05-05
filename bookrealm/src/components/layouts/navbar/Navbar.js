@@ -70,7 +70,6 @@ import { getAuth, signOut } from "firebase/auth";
 import fire from "../../../firebase/Firebase";
 import axios from "axios";
 
-
 export default function Navbar({ darkTheme, darkTextTheme }) {
   const user = useContext(userContext);
   const navigate = useNavigate();
@@ -81,20 +80,22 @@ export default function Navbar({ darkTheme, darkTextTheme }) {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:2000/user/id/${user.uid}`
-        );
-        console.log('fetch success for navbar')
-        setUserData(response.data);
-        // console.log(response)
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        toast.error('Error fetching your information,check your network')
+      if (user) {
+        try {
+          const response = await axios.get(
+            `https://bookrealm.onrender.com/user/id/${user.uid}`
+          );
+          console.log("fetch success for navbar");
+          setUserData(response.data);
+          // console.log(response)
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          // toast.error('Error fetching your information,check your network')
+        }
       }
     };
     fetchUserData();
-  }, [user.uid]);
+  }, [user]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

@@ -40,7 +40,7 @@ export const DetailsSection = () => {
     // setbookdata(newData[0]); //[0] to get the first element/object of the newbook array
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(`http://localhost:2000/book/${id}`);
+        const response = await axios.get(`https://bookrealm.onrender.com/book/${id}`);
         console.log("Book", response);
         setbookdata(response.data);
       } catch (error) {

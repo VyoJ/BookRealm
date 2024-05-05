@@ -33,7 +33,7 @@ export const AuthForm = ({ btnName }) => {
           // console.log(userCredentials)
           userCredentials.user.displayName = username;
           axios
-            .post("http://localhost:2000/user/create", {
+            .post("https://bookrealm.onrender.com/user/create", {
               userid: userCredentials.user.uid,
               email: email,
             })

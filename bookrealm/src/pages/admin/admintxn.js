@@ -12,7 +12,7 @@ function AdminTransactions() {
 
     async function getTxns() {
       try {
-        let txns = await axios.post("http://localhost:2000/transaction", {
+        let txns = await axios.post("https://bookrealm.onrender.com/transaction", {
           user: "admin",
         });
         setTransactions(txns.data);

@@ -73,7 +73,7 @@ export const UserPortal = () => {
     toast.success('your personal information has been saved')
     try {
       const response = await axios.put(
-        `http://localhost:2000/user/update/${authenticateUser.uid}`,
+        `https://bookrealm.onrender.com/user/update/${authenticateUser.uid}`,
         {
           userid: authenticateUser.uid,
           email: email,
@@ -99,7 +99,7 @@ export const UserPortal = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2000/user/id/${authenticateUser.uid}`
+          `https://bookrealm.onrender.com/user/id/${authenticateUser.uid}`
         );
         setUserData(response.data);
         // console.log(response)

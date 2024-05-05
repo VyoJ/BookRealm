@@ -11,7 +11,7 @@ const ApprovalGrid = ({ userId }) => {
     const fetchUserBooks = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:2000/book/approval/${userId}`
+          `https://bookrealm.onrender.com/book/approval/${userId}`
         );
         const books = response.data;
         setUserBooks(books);

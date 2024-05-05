@@ -26,7 +26,7 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://localhost:2000/book");
+        const response = await axios.get("https://bookrealm.onrender.com/book");
         console.log("Books", response);
         setbookdata(response.data);
         // Assuming the response data is an array of books, filter them based on the search query

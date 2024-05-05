@@ -5,7 +5,7 @@ import axios from 'axios';
 import { UserPortal } from '../UserPortal';
 
 export const Portalstate = (props) => {
-  const host = "http://localhost:2000";
+  const host = "https://bookrealm.onrender.com";
   const [userData, setUserData] = useState(null);
   const authenticateUser = useContext(userContext);
 

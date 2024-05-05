@@ -7,7 +7,7 @@
 
 // const CartState = ( props) => {
 //     const {cartItem,setcartItem } = useContext(cartContext)
-//     const host = "http://localhost:2000/cart"
+//     const host = "https://bookrealm.onrender.com/cart"
 //     // const cartinitial = []
 //     // const [cart,setcart] = useState(cartinitial)
 //     const authenticateUser = useContext(userContext)
@@ -75,7 +75,7 @@ import {  toast } from 'react-toastify';
 
 const CartState = (props) => {
   const { cartItem, setcartItem } = useContext(cartContext);
-  const host = "http://localhost:2000/cart";
+  const host = "https://bookrealm.onrender.com/cart";
   // const cartinitial = []
   // const [cart,setcart] = useState(cartinitial)
   const authenticateUser = useContext(userContext);

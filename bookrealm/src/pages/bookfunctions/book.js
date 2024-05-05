@@ -7,7 +7,7 @@
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:2000/book/');
+//         const response = await axios.get('https://bookrealm.onrender.com/book/');
 //         console.log('Response data:', response.data); // Logging response data
 //         setBooks(response.data);
 //       } catch (error) {
@@ -62,7 +62,7 @@ const BookList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:2000/book/");
+        const response = await axios.get("https://bookrealm.onrender.com/book/");
         console.log("Response data:", response.data); // Logging response data
         setBooks(response.data);
       } catch (error) {
@@ -74,7 +74,7 @@ const BookList = () => {
 
   const deleteBook = async (id) => {
     try {
-      await axios.delete(`http://localhost:2000/book/delete/${id}`);
+      await axios.delete(`https://bookrealm.onrender.com/book/delete/${id}`);
       setBooks(books.filter((book) => book._id !== id));
      toast.info('book is deleted')
     } catch (error) {
